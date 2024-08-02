@@ -88,8 +88,8 @@ export default function Table(game) {
   const players = !game.gameMetadata
     ? []
     : game.gameMetadata
-        .filter((p) => p.name)
-        .map((p) => ({ ...p, id: String(p.id) }));
+      .filter((p) => p.name)
+      .map((p) => ({ ...p, id: String(p.id) }));
   // host is lowest active user
   const firstPlayer =
     get(
@@ -180,6 +180,10 @@ export default function Table(game) {
               <div className="divider" />
             </div>
           ) : null}
+        </section>
+        <section>
+          <p id="question-title">Question</p>
+          <p id="question">{game.G.question || 'No question set'}</p>
         </section>
         <div className="queue">
           <p>Players Buzzed</p>
