@@ -8,11 +8,10 @@
     "node": ">=16.13.0"
   },
   "scripts": {
-    "start": "vercel dev",
+    "start": "node -r esm src/server.js",
     "dev": "concurrently \"PORT=4000 yarn client\" \"PORT=4001 yarn start\"",
     "client": "react-scripts start",
     "build": "react-scripts build",
-    "vercel-build": "yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -22,6 +21,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.2",
     "boardgame.io": "wsun/boardgame.io#master",
+    "esm": "^3.2.25",
     "howler": "^2.1.3",
     "koa-ratelimit": "^4.2.1",
     "koa-static": "^5.0.0",
