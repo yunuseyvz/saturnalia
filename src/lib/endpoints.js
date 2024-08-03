@@ -7,7 +7,7 @@ axios.defaults.headers['Accept'] = 'application/json';
 const hostname = window.location.hostname;
 const port = window.location.port;
 const protocol = window.location.protocol;
-const gameport = process.env.PORT || 3001;
+const gameport = process.env.PORT || 4001;
 const url = protocol + '//' + hostname + (port ? ':' + port : '');
 const localUrl = `${protocol}//${hostname}:${gameport}`;
 

@@ -34,7 +34,6 @@ export default function Lobby({ setAuth }) {
   const [joinMode, setJoinMode] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [category, setCategory] = useState(''); // New state for category
 
   // enter room: find room, then join it
   async function enterRoom(roomId, hosting = false) {
@@ -86,7 +85,7 @@ export default function Lobby({ setAuth }) {
   async function makeRoom() {
     setLoading(true);
     try {
-      const createRes = await createRoom({ category }); // Include category in room creation
+      const createRes = await createRoom();
       if (createRes.status !== 200) {
         throw new Error(ERROR_TYPE.hostRoom);
       }
@@ -179,24 +178,6 @@ export default function Lobby({ setAuth }) {
             setName(e.target.value);
           }}
         />
-      </Form.Group>
-
-      <Form.Group controlId="category">
-        <Form.Label>Category</Form.Label>
-        <Form.Control
-          as="select"
-          value={category}
-          onChange={(e) => {
-            setError('');
-            setCategory(e.target.value);
-          }}
-        >
-          <option value="">Select a category</option>
-          <option value="science">Science</option>
-          <option value="history">History</option>
-          <option value="sports">Sports</option>
-          <option value="entertainment">Entertainment</option>
-        </Form.Control>
       </Form.Group>
 
       <div className="error-message">{error}</div>

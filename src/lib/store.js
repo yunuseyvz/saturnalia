@@ -25,24 +25,18 @@ function buzz(G, ctx, id) {
   G.queue = newQueue;
 }
 
-function setQuestion(G, ctx, question) {
-  G.question = question;
-}
-
 export const Buzzer = {
   name: 'buzzer',
   minPlayers: 2,
   maxPlayers: 200,
-  setup: () => ({
-    queue: {},
-    locked: false,
-    question: '', // Initialize question
-  }),
-  moves: {
-    resetBuzzers,
-    resetBuzzer,
-    toggleLock,
-    buzz,
-    setQuestion, // Add setQuestion to moves
+  setup: () => ({ queue: {}, locked: false }),
+  phases: {
+    play: {
+      start: true,
+      moves: { buzz, resetBuzzer, resetBuzzers, toggleLock },
+      turn: {
+        activePlayers: ActivePlayers.ALL,
+      },
+    },
   },
 };

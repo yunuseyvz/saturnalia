@@ -8,7 +8,7 @@ export function FooterSimple() {
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href="https://github.com/yunuseyvz/multibuzzer"
+        href="https://github.com/wsun/multibuzzer"
       >
         open source
       </a>
