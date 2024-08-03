@@ -62,7 +62,7 @@ body {
   margin-right: 10px;
 }
 
-.App header .nav-buttons > :not(:first-child) {
+.App header .nav-buttons> :not(:first-child) {
   margin-left: 5px;
 }
 
@@ -178,7 +178,7 @@ body {
   width: 75%;
 }
 
-.App .touts > :not(:first-child) {
+.App .touts> :not(:first-child) {
   margin-top: 40px;
 }
 
@@ -248,6 +248,14 @@ body {
 }
 
 /* GAME */
+.App #question-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .App #game .container-loading {
   margin-top: 80px;
   text-align: center;
@@ -274,7 +282,7 @@ body {
   justify-content: center;
 }
 
-.App #buzzer > button {
+.App #buzzer>button {
   width: 300px;
   height: 300px;
   border-radius: 50%;
@@ -286,20 +294,20 @@ body {
   user-select: none;
 }
 
-.App #buzzer > button:hover {
+.App #buzzer>button:hover {
   background-color: var(--hoverBlueColor);
 }
 
-.App #buzzer > button:active {
+.App #buzzer>button:active {
   background-color: var(--darkBlueColor);
 }
 
-.App #buzzer > button:disabled {
+.App #buzzer>button:disabled {
   background-color: var(--lightBackgroundColor);
 }
 
 @media screen and (max-width: 767px) {
-  .App #buzzer > button {
+  .App #buzzer>button {
     max-width: 200px;
     max-height: 200px;
   }
@@ -309,7 +317,7 @@ body {
   margin-top: 30px;
 }
 
-.App .settings > .button-container:not(:first-child) {
+.App .settings>.button-container:not(:first-child) {
   margin-top: 10px;
 }
 

@@ -13,6 +13,7 @@ export default function Table(game) {
   const [lastBuzz, setLastBuzz] = useState(null);
   const [sound, setSound] = useState(false);
   const [soundPlayed, setSoundPlayed] = useState(false);
+  const [question, setQuestion] = useState(game.G.question || ''); // New state for question
   const buzzButton = useRef(null);
   const queueRef = useRef(null);
 
@@ -88,8 +89,8 @@ export default function Table(game) {
   const players = !game.gameMetadata
     ? []
     : game.gameMetadata
-        .filter((p) => p.name)
-        .map((p) => ({ ...p, id: String(p.id) }));
+      .filter((p) => p.name)
+      .map((p) => ({ ...p, id: String(p.id) }));
   // host is lowest active user
   const firstPlayer =
     get(
@@ -143,10 +144,13 @@ export default function Table(game) {
       <Container>
         <section>
           <p id="room-title">Room {game.gameID}</p>
+          <div className="question" style={{ margin: '20px 0' }}>
+            <p>Question: {question}</p>
+          </div>
           {!game.isConnected ? (
             <p className="warning">Disconnected - attempting to reconnect...</p>
           ) : null}
-          <div id="buzzer">
+          <div id="buzzer" style={{ margin: '20px 0' }}>
             <button
               ref={buzzButton}
               disabled={buzzed || game.G.locked}
@@ -160,7 +164,7 @@ export default function Table(game) {
             </button>
           </div>
           {isHost ? (
-            <div className="settings">
+            <div className="settings" style={{ margin: '20px 0' }}>
               <div className="button-container">
                 <button
                   className="text-button"

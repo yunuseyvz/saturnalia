@@ -1,4 +1,10 @@
 import { ActivePlayers } from 'boardgame.io/core';
+import { questions } from './questions'; // Import questions
+
+function getRandomQuestion() {
+  const randomIndex = Math.floor(Math.random() * questions.length);
+  return questions[randomIndex];
+}
 
 function resetBuzzers(G) {
   G.queue = {};
@@ -29,7 +35,15 @@ export const Buzzer = {
   name: 'buzzer',
   minPlayers: 2,
   maxPlayers: 200,
-  setup: () => ({ queue: {}, locked: false }),
+  setup: () => {
+    const question = getRandomQuestion(); // Get a random question
+    console.log("Random Question:", question); // Print the question to the console
+    return {
+      queue: {},
+      locked: false,
+      question, // Initialize with the random question
+    };
+  },
   phases: {
     play: {
       start: true,
