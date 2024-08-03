@@ -2,12 +2,11 @@ import path from 'path';
 import serve from 'koa-static';
 import ratelimit from 'koa-ratelimit';
 import { v4 as uuidv4 } from 'uuid';
+import { Server } from 'boardgame.io/server';
+import { Buzzer } from '../lib/store';
 
-const Server = require('boardgame.io/server').Server;
-const Buzzer = require('./lib/store').Buzzer;
 const server = Server({ games: [Buzzer], generateCredentials: () => uuidv4() });
 
-const PORT = process.env.PORT || 4001;
 const { app } = server;
 
 const FRONTEND_PATH = path.join(__dirname, '../build');
@@ -21,7 +20,6 @@ app.use(
 
 function randomString(length, chars) {
   let result = '';
-  // eslint-disable-next-line no-plusplus
   for (let i = length; i > 0; --i)
     result += chars[Math.floor(Math.random() * chars.length)];
   return result;
@@ -33,7 +31,6 @@ app.use(
   ratelimit({
     driver: 'memory',
     db: db,
-    // 1 min window
     duration: 60000,
     errorMessage: 'Too many requests',
     id: (ctx) => ctx.ip,
@@ -44,19 +41,19 @@ app.use(
   })
 );
 
-server.run(
-  {
-    port: PORT,
-    lobbyConfig: { uuid: () => randomString(6, 'ABCDEFGHJKLMNPQRSTUVWXYZ') },
-  },
-  () => {
-    // rewrite rule for catching unresolved routes and redirecting to index.html
-    // for client-side routing
-    server.app.use(async (ctx, next) => {
-      await serve(FRONTEND_PATH)(
-        Object.assign(ctx, { path: 'index.html' }),
-        next
-      );
-    });
-  }
-);
+export default async (req, res) => {
+  await server.run(
+    {
+      port: process.env.PORT || 4001,
+      lobbyConfig: { uuid: () => randomString(6, 'ABCDEFGHJKLMNPQRSTUVWXYZ') },
+    },
+    () => {
+      server.app.use(async (ctx, next) => {
+        await serve(FRONTEND_PATH)(
+          Object.assign(ctx, { path: 'index.html' }),
+          next
+        );
+      });
+    }
+  );
+};
