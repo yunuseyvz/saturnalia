@@ -50,9 +50,9 @@ function buzz(G, ctx, id) {
 }
 
 function nextQuestion(G, ctx) {
-  if (G.currentQuestionIndex < G.questions.length) {
+  if (G.currentQuestionIndex < G.questions.length - 1) {
     G.currentQuestionIndex += 1;
-    G.question = G.questions[G.currentQuestionIndex - 1].question;
+    G.question = G.questions[G.currentQuestionIndex].question;
     resetBuzzers(G);
   }
 }
@@ -69,7 +69,7 @@ export const Buzzer = {
       queue: {},
       locked: false,
       questions: shuffledQuestions, // Initialize with the shuffled list of questions
-      currentQuestionIndex: 1, // Initialize the current question index
+      currentQuestionIndex: 0, // Initialize the current question index
       question: shuffledQuestions[0].question, // Set the first question
     };
   },

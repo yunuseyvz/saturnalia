@@ -1,22 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { get, some, values, sortBy, orderBy, isEmpty, round } from 'lodash';
+import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
 import { AiOutlineDisconnect } from 'react-icons/ai';
 import { Container } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../App.css';
 
-export default function Table(game) {
+export default function Table({ G, ctx, moves, playerID, gameMetadata, headerData, gameID, isConnected }) {
   const [loaded, setLoaded] = useState(false);
-  const [buzzed, setBuzzer] = useState(
-    some(game.G.queue, (o) => o.id === game.playerID)
-  );
+  const [buzzed, setBuzzer] = useState(some(G.queue, (o) => o.id === playerID));
   const [lastBuzz, setLastBuzz] = useState(null);
   const [sound, setSound] = useState(false);
   const [soundPlayed, setSoundPlayed] = useState(false);
-  const [question, setQuestion] = useState(game.G.questions[0].question || '');
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1); // New state for current question index
-  const [totalQuestions, setTotalQuestions] = useState(game.G.questions.length); // New state for total questions
+  const [question, setQuestion] = useState(G.question || '');
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(G.currentQuestionIndex || 0);
+  const [totalQuestions, setTotalQuestions] = useState(G.questions.length);
   const buzzButton = useRef(null);
   const queueRef = useRef(null);
 
@@ -37,14 +35,14 @@ export default function Table(game) {
   };
 
   useEffect(() => {
-    console.log(game.G.queue, Date.now());
+    console.log(G.queue, Date.now());
     // reset buzzer based on game
-    if (!game.G.queue[game.playerID]) {
+    if (!G.queue[playerID]) {
       // delay the reset, in case game state hasn't reflected your buzz yet
       if (lastBuzz && Date.now() - lastBuzz < 500) {
         setTimeout(() => {
           const queue = queueRef.current;
-          if (queue && !queue[game.playerID]) {
+          if (queue && !queue[playerID]) {
             setBuzzer(false);
           }
         }, 500);
@@ -55,7 +53,7 @@ export default function Table(game) {
     }
 
     // reset ability to play sound if there is no pending buzzer
-    if (isEmpty(game.G.queue)) {
+    if (isEmpty(G.queue)) {
       setSoundPlayed(false);
     } else if (loaded) {
       playSound();
@@ -65,13 +63,25 @@ export default function Table(game) {
       setLoaded(true);
     }
 
-    queueRef.current = game.G.queue;
-  }, [game.G.queue]);
+    queueRef.current = G.queue;
+  }, [G.queue]);
+
+  useEffect(() => {
+    // Update local state when game state changes
+    setQuestion(G.question);
+    setCurrentQuestionIndex(G.currentQuestionIndex);
+  }, [G.question, G.currentQuestionIndex]);
+
+  useEffect(() => {
+    // Ensure initial state is set correctly
+    setQuestion(G.questions[G.currentQuestionIndex].question);
+    setCurrentQuestionIndex(G.currentQuestionIndex);
+  }, []);
 
   const attemptBuzz = () => {
     if (!buzzed) {
       playSound();
-      game.moves.buzz(game.playerID);
+      moves.buzz(playerID);
       setBuzzer(true);
       setLastBuzz(Date.now());
     }
@@ -89,9 +99,9 @@ export default function Table(game) {
     return () => window.removeEventListener('keydown', onKeydown);
   }, []);
 
-  const players = !game.gameMetadata
+  const players = !gameMetadata
     ? []
-    : game.gameMetadata
+    : gameMetadata
       .filter((p) => p.name)
       .map((p) => ({ ...p, id: String(p.id) }));
   // host is lowest active user
@@ -100,9 +110,9 @@ export default function Table(game) {
       sortBy(players, (p) => parseInt(p.id, 10)).filter((p) => p.connected),
       '0'
     ) || null;
-  const isHost = get(firstPlayer, 'id') === game.playerID;
+  const isHost = get(firstPlayer, 'id') === playerID;
 
-  const queue = sortBy(values(game.G.queue), ['timestamp']);
+  const queue = sortBy(values(G.queue), ['timestamp']);
   const buzzedPlayers = queue
     .map((p) => {
       const player = players.find((player) => player.id === p.id);
@@ -131,20 +141,21 @@ export default function Table(game) {
   };
 
   const nextQuestion = () => {
-    if (currentQuestionIndex < totalQuestions) {
-      const nextIndex = currentQuestionIndex;
-      setCurrentQuestionIndex(nextIndex + 1);
-      setQuestion(game.G.questions[nextIndex].question);
-      game.moves.resetBuzzers();
+    if (currentQuestionIndex < totalQuestions - 1) {
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
+      setQuestion(G.questions[nextIndex].question);
+      moves.nextQuestion(); // Call the move to update the game state
+      moves.resetBuzzers(); // Reset buzzers for the next question
     }
   };
 
   return (
     <div>
       <Header
-        auth={game.headerData}
+        auth={headerData}
         clearAuth={() =>
-          game.headerData.setAuth({
+          headerData.setAuth({
             playerID: null,
             credentials: null,
             roomID: null,
@@ -155,25 +166,25 @@ export default function Table(game) {
       />
       <Container>
         <section>
-          <p id="room-title">Room {game.gameID}</p>
+          <p id="room-title">Room {gameID}</p>
           <div className="question-box">
             <p>{question}</p>
           </div>
-          <p className="question-counter">Question {currentQuestionIndex}/{totalQuestions}</p>
-          {!game.isConnected ? (
+          <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
+          {!isConnected ? (
             <p className="warning">Disconnected - attempting to reconnect...</p>
           ) : null}
           <div id="buzzer" style={{ margin: '20px 0' }}>
             <button
               ref={buzzButton}
-              disabled={buzzed || game.G.locked}
+              disabled={buzzed || G.locked}
               onClick={() => {
-                if (!buzzed && !game.G.locked) {
+                if (!buzzed && !G.locked) {
                   attemptBuzz();
                 }
               }}
             >
-              {game.G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
+              {G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
             </button>
           </div>
           {isHost ? (
@@ -181,15 +192,14 @@ export default function Table(game) {
               <div className="button-container">
                 <button
                   className="text-button"
-                  onClick={() => game.moves.toggleLock()}
+                  onClick={() => moves.toggleLock()}
                 >
-                  {game.G.locked ? 'Unlock buzzers' : 'Lock buzzers'}
+                  {G.locked ? 'Unlock buzzers' : 'Lock buzzers'}
                 </button>
               </div>
               <div className="button-container">
                 <button
-                  disabled={isEmpty(game.G.queue)}
-                  onClick={() => game.moves.resetBuzzers()}
+                  onClick={() => moves.resetBuzzers()}
                 >
                   Reset all buzzers
                 </button>
@@ -214,7 +224,7 @@ export default function Table(game) {
                   className="player-sign"
                   onClick={() => {
                     if (isHost) {
-                      game.moves.resetBuzzer(id);
+                      moves.resetBuzzer(id);
                     }
                   }}
                 >
