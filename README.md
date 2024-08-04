@@ -2,6 +2,10 @@
 
 ![Header](https://github.com/yunuseyvz/saturnalia/blob/main/public/image.png?raw=true)
 
+<p align="center">
+  <img src="http://some_place.com/image.png](https://github.com/yunuseyvz/saturnalia/blob/main/public/image.png?raw=true" />
+</p>
+
 Simple multiplayer buzzer system with quiz questions
 
 https://saturnalia.onrender.com
