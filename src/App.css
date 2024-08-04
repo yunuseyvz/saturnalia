@@ -248,6 +248,67 @@ body {
 }
 
 /* GAME */
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.App {
+  overflow: hidden;
+}
+
+.App .question-box {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+  /* Adjust height as needed */
+}
+
+.App .question-box p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2c313e;
+  margin: 0;
+  /* Remove default margins */
+}
+
+.App .question-box.slide-out {
+  animation: slideOut 0.5s forwards;
+}
+
+.App .question-box.slide-in {
+  animation: slideIn 0.5s forwards;
+}
+
 .App .question-counter {
   text-align: center;
   font-size: 18px;

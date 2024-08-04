@@ -17,6 +17,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const [totalQuestions, setTotalQuestions] = useState(G.questions.length);
   const buzzButton = useRef(null);
   const queueRef = useRef(null);
+  const questionBoxRef = useRef(null);
 
   const buzzSound = new Howl({
     src: [
@@ -143,15 +144,28 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const nextQuestion = () => {
     if (currentQuestionIndex < totalQuestions - 1) {
       const nextIndex = currentQuestionIndex + 1;
-      setCurrentQuestionIndex(nextIndex);
-      setQuestion(G.questions[nextIndex].question);
       moves.nextQuestion(); // Call the move to update the game state
       moves.resetBuzzers(); // Reset buzzers for the next question
     }
   };
 
+  useEffect(() => {
+    const questionBox = questionBoxRef.current;
+
+    // Trigger slide-out animation
+    questionBox.classList.add('slide-out');
+    setTimeout(() => {
+      // Trigger slide-in animation
+      questionBox.classList.remove('slide-out');
+      questionBox.classList.add('slide-in');
+      setTimeout(() => {
+        questionBox.classList.remove('slide-in');
+      }, 500); // Match the duration of the slide-in animation
+    }, 500); // Match the duration of the slide-out animation
+  }, [question]);
+
   return (
-    <div>
+    <div className="App">
       <Header
         auth={headerData}
         clearAuth={() =>
@@ -167,7 +181,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
       <Container>
         <section>
           <p id="room-title">Room {gameID}</p>
-          <div className="question-box">
+          <div className="question-box" ref={questionBoxRef}>
             <p>{question}</p>
           </div>
           <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
