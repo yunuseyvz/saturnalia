@@ -1,6 +1,3 @@
-<h2 align="center">
-  Saturnalia 1.0
-</h2>
 
 <p align="center">
   <img src="https://github.com/yunuseyvz/saturnalia/blob/main/public/image.png?raw=true" />
