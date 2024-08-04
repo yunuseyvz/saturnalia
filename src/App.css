@@ -77,6 +77,21 @@ body {
   border: solid 1px white;
 }
 
+.navbar-button,
+.icon-button {
+  background: none;
+  border: none !important;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #333;
+  padding: 0.5em;
+  margin: 0 0.5em;
+}
+
+.icon-button:hover {
+  color: #007bff;
+}
+
 .App button:disabled {
   border-color: var(--disabledTextColor);
   color: var(--disabledTextColor);
