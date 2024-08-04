@@ -2,11 +2,27 @@
 
 Simple multiplayer buzzer system
 
-https://multibuzz.app
+https://multibuzzer.onrender.com
 
 Built using Create React App and boardgame.io
 
 Please open an issue if you experience a bug or have product feedback!
+
+### Functionality
+
+- **Multiplayer Buzzer System**: Allows multiple players to join a room and buzz in response to questions.
+- **Quiz Questions**: Includes a set of quiz questions that players can answer.
+- **Host Controls**: The host can lock/unlock buzzers, reset buzzers, and move to the next question.
+
+### Planned Features
+
+- **Upload Custom Questions**: Allow users to upload their own set of questions.
+- **Categories**: Organize questions into different categories for a more structured quiz experience.
+- ... and more
+
+### Fork Information
+
+I forked this project from https://github.com/wsun/multibuzzer.
 
 ### Development
 
