@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
-import { AiOutlineDisconnect } from 'react-icons/ai';
+import { AiOutlineDisconnect, AiOutlineArrowRight } from 'react-icons/ai';
 import { Container } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../App.css';
@@ -184,7 +184,14 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           <div className="question-box" ref={questionBoxRef}>
             <p>{question}</p>
           </div>
-          <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
+          <div className="question-counter-container">
+            <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
+            {isHost ? (
+              <button className="next-question-button" onClick={nextQuestion}>
+                <AiOutlineArrowRight size={24} />
+              </button>
+            ) : null}
+          </div>
           {!isConnected ? (
             <p className="warning">Disconnected - attempting to reconnect...</p>
           ) : null}
@@ -216,13 +223,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   onClick={() => moves.resetBuzzers()}
                 >
                   Reset all buzzers
-                </button>
-              </div>
-              <div className="button-container">
-                <button
-                  onClick={nextQuestion}
-                >
-                  Next Question
                 </button>
               </div>
               <div className="divider" />
