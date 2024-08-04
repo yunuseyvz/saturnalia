@@ -1,6 +1,8 @@
 ## Saturnalia 1.0
 
-![Header](https://github.com/yunuseyvz/saturnalia/blob/main/public/image.png?raw=true)
+<p align="center">
+  <img src="https://github.com/yunuseyvz/saturnalia/blob/main/public/image.png?raw=true" />
+</p>
 
 Simple multiplayer buzzer system with quiz questions
 
