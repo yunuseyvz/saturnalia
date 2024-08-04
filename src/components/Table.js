@@ -4,6 +4,7 @@ import { Howl } from 'howler';
 import { AiOutlineDisconnect } from 'react-icons/ai';
 import { Container } from 'react-bootstrap';
 import Header from '../components/Header';
+import '../App.css';
 
 export default function Table(game) {
   const [loaded, setLoaded] = useState(false);
@@ -144,7 +145,7 @@ export default function Table(game) {
       <Container>
         <section>
           <p id="room-title">Room {game.gameID}</p>
-          <div className="question" style={{ margin: '20px 0' }}>
+          <div className="question-box"> {/* Apply the new CSS class */}
             <p>Question: {question}</p>
           </div>
           {!game.isConnected ? (

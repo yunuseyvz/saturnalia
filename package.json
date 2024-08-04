@@ -8,10 +8,10 @@
     "node": ">=16.13.0"
   },
   "scripts": {
-    "start": "node -r esm src/server.js",
-    "dev": "concurrently \"PORT=4000 yarn client\" \"PORT=4001 yarn start\"",
-    "client": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider node -r esm src/server.js",
+    "dev": "concurrently \"PORT=3000 NODE_OPTIONS=--openssl-legacy-provider yarn client\" \"PORT=3001 NODE_OPTIONS=--openssl-legacy-provider yarn start\"",
+    "client": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
