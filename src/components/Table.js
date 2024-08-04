@@ -14,7 +14,9 @@ export default function Table(game) {
   const [lastBuzz, setLastBuzz] = useState(null);
   const [sound, setSound] = useState(false);
   const [soundPlayed, setSoundPlayed] = useState(false);
-  const [question, setQuestion] = useState(game.G.question || ''); // New state for question
+  const [question, setQuestion] = useState(game.G.questions[0].question || '');
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1); // New state for current question index
+  const [totalQuestions, setTotalQuestions] = useState(game.G.questions.length); // New state for total questions
   const buzzButton = useRef(null);
   const queueRef = useRef(null);
 
@@ -128,6 +130,15 @@ export default function Table(game) {
     return `+${delta} ms`;
   };
 
+  const nextQuestion = () => {
+    if (currentQuestionIndex < totalQuestions) {
+      const nextIndex = currentQuestionIndex;
+      setCurrentQuestionIndex(nextIndex + 1);
+      setQuestion(game.G.questions[nextIndex].question);
+      game.moves.resetBuzzers();
+    }
+  };
+
   return (
     <div>
       <Header
@@ -145,9 +156,10 @@ export default function Table(game) {
       <Container>
         <section>
           <p id="room-title">Room {game.gameID}</p>
-          <div className="question-box"> {/* Apply the new CSS class */}
-            <p>Question: {question}</p>
+          <div className="question-box">
+            <p>{question}</p>
           </div>
+          <p className="question-counter">Question {currentQuestionIndex}/{totalQuestions}</p>
           {!game.isConnected ? (
             <p className="warning">Disconnected - attempting to reconnect...</p>
           ) : null}
@@ -180,6 +192,13 @@ export default function Table(game) {
                   onClick={() => game.moves.resetBuzzers()}
                 >
                   Reset all buzzers
+                </button>
+              </div>
+              <div className="button-container">
+                <button
+                  onClick={nextQuestion}
+                >
+                  Next Question
                 </button>
               </div>
               <div className="divider" />

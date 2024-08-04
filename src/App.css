@@ -248,6 +248,12 @@ body {
 }
 
 /* GAME */
+.App .question-counter {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
 .App .question-box {
   background-color: white;
   border-radius: 10px;
