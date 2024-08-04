@@ -1,12 +1,10 @@
-## Multibuzzer
+## Saturnalia
 
-Simple multiplayer buzzer system
+Simple multiplayer buzzer system with quiz questions
 
 https://multibuzzer.onrender.com
 
 Built using Create React App and boardgame.io
-
-Please open an issue if you experience a bug or have product feedback!
 
 ### Functionality
 
@@ -19,6 +17,9 @@ Please open an issue if you experience a bug or have product feedback!
 - **Upload Custom Questions**: Allow users to upload their own set of questions.
 - **Categories**: Organize questions into different categories for a more structured quiz experience.
 - ... and more
+
+### Saturnalia?
+Felt cute
 
 ### Fork Information
 
