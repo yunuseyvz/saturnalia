@@ -29,7 +29,7 @@ export default function Footer({ mobileOnly = false }) {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://github.com/wsun/multibuzzer"
+            href="https://github.com/yunuseyvz/saturnalia"
           >
             open source
           </a>

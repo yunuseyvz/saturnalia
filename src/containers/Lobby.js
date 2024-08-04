@@ -202,7 +202,7 @@ export default function Lobby({ setAuth }) {
   const touts = (
     <div className="touts">
       <div>
-        <h4>Simple multiplayer buzzer system</h4>
+        <h4>Simple multiplayer buzzer and quiz system</h4>
         <p>Host a room and invite up to 200 people to join</p>
       </div>
       <div>

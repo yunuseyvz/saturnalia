@@ -2,7 +2,7 @@
 
 Simple multiplayer buzzer system with quiz questions
 
-https://multibuzzer.onrender.com
+https://saturnalia.onrender.com
 
 Built using Create React App and boardgame.io
 

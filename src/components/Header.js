@@ -4,19 +4,27 @@ import { isNil } from 'lodash';
 import { useHistory } from 'react-router';
 import { leaveRoom } from '../lib/endpoints';
 
-function Logo({ size = 25 }) {
+function Logo({ size = 30, color = '#2eb2ff' }) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 95 95"
-      fill="none"
+      viewBox="0 0 12 12"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="20" cy="20" r="20" fill="#F2994A" />
-      <circle cx="75" cy="20" r="20" fill="#348DF5" />
-      <circle cx="20" cy="75" r="20" fill="#348DF5" />
-      <circle cx="75" cy="75" r="20" fill="#348DF5" />
+      <path
+        style={{
+          fill: 'none',
+          stroke: color,
+          strokeWidth: 10,
+          strokeLinecap: 'butt',
+          strokeLinejoin: 'miter',
+          strokeMiterlimit: 10,
+          strokeOpacity: 1,
+        }}
+        transform="matrix(.1 0 0 -.1 0 12)"
+        d="M30 90h40m-20 20V60c0 11.055 8.945 20 20 20s20-8.945 20-20c0-5.313-2.11-10.39-5.86-14.14C75.079 36.796 70 22.812 70 10"
+      />
     </svg>
   );
 }
@@ -46,7 +54,7 @@ export default function Header({
     <header>
       <Navbar>
         <Navbar.Brand>
-          <Logo /> Multibuzzer
+          <Logo /> Saturnalia
         </Navbar.Brand>
         <div className="nav-buttons">
           {!isNil(sound) ? (
