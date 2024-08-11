@@ -300,6 +300,7 @@ body {
   max-width: 800px;
   text-align: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -308,12 +309,31 @@ body {
   /* Adjust height as needed */
 }
 
+.App .question-box .question {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #2c313e;
+  margin: 0;
+  /* Remove default margins */
+  margin-top: 10px;
+  /* Add margin to move the question down */
+}
+
 .App .question-box p {
   font-size: 24px;
   font-weight: bold;
   color: #2c313e;
   margin: 0;
   /* Remove default margins */
+}
+
+.App .question-box .uppercase {
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 10px;
+  /* Add some space below the category */
+  margin-top: -50px;
+  /* Move the category higher */
 }
 
 .App .question-box.slide-out {
@@ -328,25 +348,6 @@ body {
   text-align: center;
   font-size: 18px;
   margin-top: 10px;
-}
-
-.App .question-box {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 800px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.App .question-box p {
-  font-size: 24px;
-  font-weight: bold;
-  color: #2c313e;
 }
 
 .App #game .container-loading {

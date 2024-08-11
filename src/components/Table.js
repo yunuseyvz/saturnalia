@@ -6,6 +6,8 @@ import { Container } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../App.css';
 
+const categories = ['science', 'history', 'geography', 'literature', 'sports'];
+
 export default function Table({ G, ctx, moves, playerID, gameMetadata, headerData, gameID, isConnected }) {
   const [loaded, setLoaded] = useState(false);
   const [buzzed, setBuzzer] = useState(some(G.queue, (o) => o.id === playerID));
@@ -13,6 +15,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const [sound, setSound] = useState(false);
   const [soundPlayed, setSoundPlayed] = useState(false);
   const [question, setQuestion] = useState(G.question || '');
+  const [category, setCategory] = useState(G.category || categories[0]); // Add category state
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(G.currentQuestionIndex || 0);
   const [totalQuestions, setTotalQuestions] = useState(G.questions.length);
   const buzzButton = useRef(null);
@@ -70,13 +73,17 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   useEffect(() => {
     // Update local state when game state changes
     setQuestion(G.question);
+    setCategory(G.category); // Update category state
     setCurrentQuestionIndex(G.currentQuestionIndex);
-  }, [G.question, G.currentQuestionIndex]);
+    setTotalQuestions(G.questions.filter(q => q.category === G.category).length); // Update total questions
+  }, [G.question, G.category, G.currentQuestionIndex]);
 
   useEffect(() => {
     // Ensure initial state is set correctly
     setQuestion(G.questions[G.currentQuestionIndex].question);
+    setCategory(G.questions[G.currentQuestionIndex].category); // Set initial category
     setCurrentQuestionIndex(G.currentQuestionIndex);
+    setTotalQuestions(G.questions.filter(q => q.category === G.questions[G.currentQuestionIndex].category).length); // Set initial total questions
   }, []);
 
   const attemptBuzz = () => {
@@ -149,6 +156,14 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     }
   };
 
+  const handleCategoryChange = (event) => {
+    const newCategory = event.target.value;
+    setCategory(newCategory);
+    setCurrentQuestionIndex(0);
+    setTotalQuestions(G.questions.filter(q => q.category === newCategory).length); // Update total questions
+    moves.changeCategory(newCategory); // Call the move to update the game state
+  };
+
   useEffect(() => {
     const questionBox = questionBoxRef.current;
 
@@ -182,7 +197,8 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
         <section>
           <p id="room-title">Room {gameID}</p>
           <div className="question-box" ref={questionBoxRef}>
-            <p>{question}</p>
+            <p className="uppercase">{category}</p>
+            <p className="question">{question}</p>
           </div>
           <div className="question-counter-container">
             <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
@@ -226,6 +242,16 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                 </button>
               </div>
               <div className="divider" />
+              <div className="category-selector">
+                <label htmlFor="category">Choose a category:</label>
+                <select id="category" value={category} onChange={handleCategoryChange}>
+                  {G.categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           ) : null}
         </section>
