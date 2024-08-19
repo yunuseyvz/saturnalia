@@ -22,6 +22,7 @@ Built using Create React App and boardgame.io
 - **Emote Reactions**
 - **Different Buzzers for each Player**
 - **Fortune Wheel**
+- **Pre-Game Lobby** 
 
 ### Saturnalia?
 Felt cute
