@@ -196,6 +196,23 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
       <Container>
         <section>
           <p id="room-title">Room {gameID}</p>
+          {isHost ? (
+            <p className="host">You are the host</p>
+          ) : (
+            <p className="player">You are a player</p>
+          )}
+          {isHost ? (
+            <div className="category-select">
+              <label htmlFor="category">Category:  </label>
+              <select id="category" value={category} onChange={handleCategoryChange}>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : null}
           <div className="question-box" ref={questionBoxRef}>
             <p className="uppercase">{category}</p>
             <p className="question">{question}</p>
@@ -242,16 +259,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                 </button>
               </div>
               <div className="divider" />
-              <div className="category-selector">
-                <label htmlFor="category">Choose a category:</label>
-                <select id="category" value={category} onChange={handleCategoryChange}>
-                  {G.categories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
             </div>
           ) : null}
         </section>
