@@ -19,7 +19,9 @@ Built using Create React App and boardgame.io
 
 - **Upload Custom Questions**: Allow users to upload their own set of questions.
 - **Categories**: Organize questions into different categories for a more structured quiz experience.
-- ... and more
+- **Emote Reactions**
+- **Different Buzzers for each Player**
+- **Fortune Wheel**
 
 ### Saturnalia?
 Felt cute
