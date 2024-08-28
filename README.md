@@ -7,6 +7,8 @@ Simple multiplayer buzzer system with quiz questions
 
 https://saturnalia.onrender.com
 
+(Note: Initial loading could take up to 60 seconds, as this runs on a free instance of Render)
+
 Built using Create React App and boardgame.io
 
 ### Functionality
