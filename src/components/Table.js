@@ -14,8 +14,8 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const [lastBuzz, setLastBuzz] = useState(null);
   const [sound, setSound] = useState(false);
   const [soundPlayed, setSoundPlayed] = useState(false);
-  const [question, setQuestion] = useState(G.question || '');
-  const [category, setCategory] = useState(G.category || categories[0]); // Add category state
+  const [question, setQuestion] = useState(G.question);
+  const [category, setCategory] = useState(G.category);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(G.currentQuestionIndex || 0);
   const [totalQuestions, setTotalQuestions] = useState(G.questions.length);
   const buzzButton = useRef(null);
@@ -40,9 +40,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
 
   useEffect(() => {
     console.log(G.queue, Date.now());
-    // reset buzzer based on game
     if (!G.queue[playerID]) {
-      // delay the reset, in case game state hasn't reflected your buzz yet
       if (lastBuzz && Date.now() - lastBuzz < 500) {
         setTimeout(() => {
           const queue = queueRef.current;
@@ -51,12 +49,10 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           }
         }, 500);
       } else {
-        // immediate reset, if it's been awhile
         setBuzzer(false);
       }
     }
 
-    // reset ability to play sound if there is no pending buzzer
     if (isEmpty(G.queue)) {
       setSoundPlayed(false);
     } else if (loaded) {
@@ -71,20 +67,13 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   }, [G.queue]);
 
   useEffect(() => {
-    // Update local state when game state changes
-    setQuestion(G.question);
-    setCategory(G.category); // Update category state
+    // Update local state when game state changes or on initial render
+    const currentQuestion = G.questions[G.currentQuestionIndex];
+    setQuestion(currentQuestion.question);
+    setCategory(G.category); // Ensure category is updated from G.category
     setCurrentQuestionIndex(G.currentQuestionIndex);
-    setTotalQuestions(G.questions.filter(q => q.category === G.category).length); // Update total questions
-  }, [G.question, G.category, G.currentQuestionIndex]);
-
-  useEffect(() => {
-    // Ensure initial state is set correctly
-    setQuestion(G.questions[G.currentQuestionIndex].question);
-    setCategory(G.questions[G.currentQuestionIndex].category); // Set initial category
-    setCurrentQuestionIndex(G.currentQuestionIndex);
-    setTotalQuestions(G.questions.filter(q => q.category === G.questions[G.currentQuestionIndex].category).length); // Set initial total questions
-  }, []);
+    setTotalQuestions(G.questions.filter(q => q.category === G.category).length);
+  }, [G.questions, G.currentQuestionIndex, G.category, G.question]);
 
   const attemptBuzz = () => {
     if (!buzzed) {
@@ -112,7 +101,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     : gameMetadata
       .filter((p) => p.name)
       .map((p) => ({ ...p, id: String(p.id) }));
-  // host is lowest active user
   const firstPlayer =
     get(
       sortBy(players, (p) => parseInt(p.id, 10)).filter((p) => p.connected),
@@ -134,7 +122,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
       };
     })
     .filter((p) => p.name);
-  // active players who haven't buzzed
   const activePlayers = orderBy(
     players.filter((p) => !some(queue, (q) => q.id === p.id)),
     ['connected', 'name'],
@@ -151,8 +138,8 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const nextQuestion = () => {
     if (currentQuestionIndex < totalQuestions - 1) {
       const nextIndex = currentQuestionIndex + 1;
-      moves.nextQuestion(); // Call the move to update the game state
-      moves.resetBuzzers(); // Reset buzzers for the next question
+      moves.nextQuestion();
+      moves.resetBuzzers();
     }
   };
 
@@ -160,8 +147,8 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     const newCategory = event.target.value;
     setCategory(newCategory);
     setCurrentQuestionIndex(0);
-    setTotalQuestions(G.questions.filter(q => q.category === newCategory).length); // Update total questions
-    moves.pickCategory(newCategory); // Call the move to update the game state
+    setTotalQuestions(G.questions.filter(q => q.category === newCategory).length);
+    moves.changeCategory(newCategory); // Ensure this updates the game state
   };
 
   return (

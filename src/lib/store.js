@@ -66,10 +66,6 @@ function changeCategory(G, ctx, category) {
   resetBuzzers(G);
 }
 
-function pickCategory(G, ctx, category) {
-  G.selectedCategory = category;
-}
-
 function startGame(G, ctx) {
   ctx.events.setPhase('play');
 }
@@ -91,8 +87,8 @@ export const Buzzer = {
       locked: false,
       questions: shuffledQuestions, // Initialize with the shuffled list of questions
       currentQuestionIndex: 0, // Initialize the current question index
-      question: shuffledQuestions[0].question, // Set the first question
-      category: shuffledQuestions[0].category, // Set the first category
+      //question: shuffledQuestions[0].question, // Set the first question
+      //category: shuffledQuestions[0].category, // Set the first category
       selectedCategory: null, // Initialize the selected category
       categories, // Add categories to the state
     };
@@ -100,7 +96,7 @@ export const Buzzer = {
   phases: {
     lobby: {
       start: true,
-      moves: { pickCategory, startGame },
+      moves: { changeCategory, startGame },
       turn: {
         activePlayers: ActivePlayers.ALL,
       },
@@ -113,9 +109,6 @@ export const Buzzer = {
       onEnd: (G, ctx) => {
         // Reset the game state when transitioning back to the lobby
         G.currentQuestionIndex = 0;
-        G.selectedCategory = null;
-        G.question = G.questions[0].question;
-        G.category = G.questions[0].category;
         resetBuzzers(G);
       },
     },
