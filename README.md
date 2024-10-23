@@ -7,6 +7,8 @@ Simple multiplayer buzzer system with quiz questions
 
 https://saturnalia.onrender.com
 
+(Note: Initial loading could take up to 60 seconds, as this runs on a free instance of Render)
+
 Built using Create React App and boardgame.io
 
 ### Functionality
@@ -19,7 +21,10 @@ Built using Create React App and boardgame.io
 
 - **Upload Custom Questions**: Allow users to upload their own set of questions.
 - **Categories**: Organize questions into different categories for a more structured quiz experience.
-- ... and more
+- **Emote Reactions**
+- **Different Buzzers for each Player**
+- **Fortune Wheel**
+- **Pre-Game Lobby** 
 
 ### Saturnalia?
 Felt cute
