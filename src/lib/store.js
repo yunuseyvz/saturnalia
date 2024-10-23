@@ -66,6 +66,18 @@ function changeCategory(G, ctx, category) {
   resetBuzzers(G);
 }
 
+function pickCategory(G, ctx, category) {
+  G.selectedCategory = category;
+}
+
+function startGame(G, ctx) {
+  ctx.events.setPhase('play');
+}
+
+function stopGame(G, ctx) {
+  ctx.events.setPhase('lobby');
+}
+
 export const Buzzer = {
   name: 'buzzer',
   minPlayers: 2,
@@ -86,11 +98,25 @@ export const Buzzer = {
     };
   },
   phases: {
-    play: {
+    lobby: {
       start: true,
-      moves: { buzz, resetBuzzer, resetBuzzers, toggleLock, nextQuestion, changeCategory },
+      moves: { pickCategory, startGame },
       turn: {
         activePlayers: ActivePlayers.ALL,
+      },
+    },
+    play: {
+      moves: { buzz, resetBuzzer, resetBuzzers, toggleLock, nextQuestion, changeCategory, stopGame },
+      turn: {
+        activePlayers: ActivePlayers.ALL,
+      },
+      onEnd: (G, ctx) => {
+        // Reset the game state when transitioning back to the lobby
+        G.currentQuestionIndex = 0;
+        G.selectedCategory = null;
+        G.question = G.questions[0].question;
+        G.category = G.questions[0].category;
+        resetBuzzers(G);
       },
     },
   },

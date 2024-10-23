@@ -161,23 +161,8 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     setCategory(newCategory);
     setCurrentQuestionIndex(0);
     setTotalQuestions(G.questions.filter(q => q.category === newCategory).length); // Update total questions
-    moves.changeCategory(newCategory); // Call the move to update the game state
+    moves.pickCategory(newCategory); // Call the move to update the game state
   };
-
-  useEffect(() => {
-    const questionBox = questionBoxRef.current;
-
-    // Trigger slide-out animation
-    questionBox.classList.add('slide-out');
-    setTimeout(() => {
-      // Trigger slide-in animation
-      questionBox.classList.remove('slide-out');
-      questionBox.classList.add('slide-in');
-      setTimeout(() => {
-        questionBox.classList.remove('slide-in');
-      }, 500); // Match the duration of the slide-in animation
-    }, 500); // Match the duration of the slide-out animation
-  }, [question]);
 
   return (
     <div className="App">
@@ -201,66 +186,85 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           ) : (
             <p className="player">You are a player</p>
           )}
-          {isHost ? (
-            <div className="category-select">
-              <label htmlFor="category">Category:  </label>
-              <select id="category" value={category} onChange={handleCategoryChange}>
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ) : null}
-          <div className="question-box" ref={questionBoxRef}>
-            <p className="uppercase">{category}</p>
-            <p className="question">{question}</p>
-          </div>
-          <div className="question-counter-container">
-            <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
-            {isHost ? (
-              <button className="next-question-button" onClick={nextQuestion}>
-                <AiOutlineArrowRight size={24} />
-              </button>
-            ) : null}
-          </div>
-          {!isConnected ? (
-            <p className="warning">Disconnected - attempting to reconnect...</p>
-          ) : null}
-          <div id="buzzer" style={{ margin: '20px 0' }}>
-            <button
-              ref={buzzButton}
-              disabled={buzzed || G.locked}
-              onClick={() => {
-                if (!buzzed && !G.locked) {
-                  attemptBuzz();
-                }
-              }}
-            >
-              {G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
-            </button>
-          </div>
-          {isHost ? (
-            <div className="settings" style={{ margin: '20px 0' }}>
-              <div className="button-container">
+          {ctx.phase === 'lobby' ? (
+            <>
+              {isHost ? (
+                <div className="category-select">
+                  <label htmlFor="category">Category:  </label>
+                  <select id="category" value={category} onChange={handleCategoryChange}>
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
+              {isHost ? (
+                <button onClick={() => moves.startGame()}>Start Game</button>
+              ) : (
+                <p>Waiting for the host to start the game...</p>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="question-box" ref={questionBoxRef}>
+                <p className="uppercase">{category}</p>
+                <p className="question">{question}</p>
+              </div>
+              <div className="question-counter-container">
+                <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
+                {isHost ? (
+                  <button className="next-question-button" onClick={nextQuestion}>
+                    <AiOutlineArrowRight size={24} />
+                  </button>
+                ) : null}
+              </div>
+              {!isConnected ? (
+                <p className="warning">Disconnected - attempting to reconnect...</p>
+              ) : null}
+              <div id="buzzer" style={{ margin: '20px 0' }}>
                 <button
-                  className="text-button"
-                  onClick={() => moves.toggleLock()}
+                  ref={buzzButton}
+                  disabled={buzzed || G.locked}
+                  onClick={() => {
+                    if (!buzzed && !G.locked) {
+                      attemptBuzz();
+                    }
+                  }}
                 >
-                  {G.locked ? 'Unlock buzzers' : 'Lock buzzers'}
+                  {G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
                 </button>
               </div>
-              <div className="button-container">
-                <button
-                  onClick={() => moves.resetBuzzers()}
-                >
-                  Reset all buzzers
-                </button>
-              </div>
-              <div className="divider" />
-            </div>
-          ) : null}
+              {isHost ? (
+                <div className="settings" style={{ margin: '20px 0' }}>
+                  <div className="button-container">
+                    <button
+                      className="text-button"
+                      onClick={() => moves.toggleLock()}
+                    >
+                      {G.locked ? 'Unlock buzzers' : 'Lock buzzers'}
+                    </button>
+                  </div>
+                  <div className="button-container">
+                    <button
+                      onClick={() => moves.resetBuzzers()}
+                    >
+                      Reset all buzzers
+                    </button>
+                  </div>
+                  <div className="button-container">
+                    <button
+                      onClick={() => moves.stopGame()}
+                    >
+                      Stop Game
+                    </button>
+                  </div>
+                  <div className="divider" />
+                </div>
+              ) : null}
+            </>
+          )}
         </section>
         <div className="queue">
           <p>Players Buzzed</p>
