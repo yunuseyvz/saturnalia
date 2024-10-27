@@ -486,3 +486,51 @@ body {
 .App .dim {
   opacity: 0.5;
 }
+
+.App .category-select {
+  margin: 20px;
+}
+
+.room-code-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#room-title {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.qr-icon {
+  margin-left: 8px;
+}
+
+.custom-modal .modal-content {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.custom-modal .modal-header,
+.custom-modal .modal-footer {
+  border: none;
+}
+
+.custom-modal .modal-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.custom-modal .modal-body {
+  padding: 20px;
+}
+
+.custom-modal .btn-secondary {
+  background-color: #007bff;
+  border-color: #007bff;
+}

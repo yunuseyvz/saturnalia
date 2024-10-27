@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
-import { AiOutlineDisconnect, AiOutlineArrowRight } from 'react-icons/ai';
-import { Container } from 'react-bootstrap';
+import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode } from 'react-icons/ai';
+import { Container, Modal, Button } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../App.css';
+import QRCode from "react-qr-code";
 
 export default function Table({ G, ctx, moves, playerID, gameMetadata, headerData, gameID, isConnected }) {
   const [loaded, setLoaded] = useState(false);
@@ -19,6 +20,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const buzzButton = useRef(null);
   const queueRef = useRef(null);
   const questionBoxRef = useRef(null);
+  const [showQRCode, setShowQRCode] = useState(false);
 
   const buzzSound = new Howl({
     src: [
@@ -149,6 +151,10 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     moves.changeCategory(newCategory); // Ensure this updates the game state
   };
 
+  const toggleQRCode = () => {
+    setShowQRCode(!showQRCode);
+  };
+
   return (
     <div className="App">
       <Header
@@ -165,7 +171,11 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
       />
       <Container>
         <section>
-          <p id="room-title">Room {gameID}</p>
+          <div className="room-code-container">
+            <p id="room-title" className="clickable" onClick={toggleQRCode}>
+              <strong>Room {gameID}</strong> <AiOutlineQrcode className="qr-icon" />
+            </p>
+          </div>
           {isHost ? (
             <p className="host">You are the host</p>
           ) : (
@@ -175,7 +185,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             <>
               {isHost ? (
                 <div className="category-select">
-                  <label htmlFor="category">Category:  </label>
                   <select id="category" value={category} onChange={handleCategoryChange}>
                     {G.categories.map((cat) => (
                       <option key={cat} value={cat}>
@@ -322,7 +331,19 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
         )}
       </Container>
 
+      <Modal show={showQRCode} onHide={toggleQRCode} centered className="custom-modal">
+        <Modal.Header closeButton className="justify-content-center">
+          <Modal.Title className="w-100 text-center">Scan QR Code to join</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="text-center">
+          <QRCode value={"saturnalia.onrender.com/" + gameID} />
+        </Modal.Body>
+        <Modal.Footer className="justify-content-center">
+          <Button variant="secondary" onClick={toggleQRCode}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
-
   );
 }
