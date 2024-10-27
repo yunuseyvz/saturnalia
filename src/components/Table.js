@@ -6,8 +6,6 @@ import { Container } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../App.css';
 
-const categories = ['science', 'history', 'geography', 'literature', 'sports'];
-
 export default function Table({ G, ctx, moves, playerID, gameMetadata, headerData, gameID, isConnected }) {
   const [loaded, setLoaded] = useState(false);
   const [buzzed, setBuzzer] = useState(some(G.queue, (o) => o.id === playerID));
@@ -179,7 +177,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                 <div className="category-select">
                   <label htmlFor="category">Category:  </label>
                   <select id="category" value={category} onChange={handleCategoryChange}>
-                    {categories.map((cat) => (
+                    {G.categories.map((cat) => (
                       <option key={cat} value={cat}>
                         {cat}
                       </option>
@@ -192,6 +190,23 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
               ) : (
                 <p>Waiting for the host to start the game...</p>
               )}
+              <div className="queue">
+                <p>Players</p>
+                <ul>
+                  {activePlayers.map(({ id, name, connected }) => (
+                    <li key={id}>
+                      <div className={`name ${!connected ? 'dim' : ''}`}>
+                        {name}
+                        {!connected ? (
+                          <AiOutlineDisconnect className="disconnected" />
+                        ) : (
+                          ''
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </>
           ) : (
             <>
@@ -253,55 +268,61 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             </>
           )}
         </section>
-        <div className="queue">
-          <p>Players Buzzed</p>
-          <ul>
-            {buzzedPlayers.map(({ id, name, timestamp, connected }, i) => (
-              <li key={id} className={isHost ? 'resettable' : null}>
-                <div
-                  className="player-sign"
-                  onClick={() => {
-                    if (isHost) {
-                      moves.resetBuzzer(id);
-                    }
-                  }}
-                >
-                  <div className={`name ${!connected ? 'dim' : ''}`}>
-                    {name}
-                    {!connected ? (
-                      <AiOutlineDisconnect className="disconnected" />
-                    ) : (
-                      ''
-                    )}
-                  </div>
-                  {i > 0 ? (
-                    <div className="mini">
-                      {timeDisplay(timestamp - queue[0].timestamp)}
+        {ctx.phase === 'play' && (
+          <>
+            <div className="queue">
+              <p>Players Buzzed</p>
+              <ul>
+                {buzzedPlayers.map(({ id, name, timestamp, connected }, i) => (
+                  <li key={id} className={isHost ? 'resettable' : null}>
+                    <div
+                      className="player-sign"
+                      onClick={() => {
+                        if (isHost) {
+                          moves.resetBuzzer(id);
+                        }
+                      }}
+                    >
+                      <div className={`name ${!connected ? 'dim' : ''}`}>
+                        {name}
+                        {!connected ? (
+                          <AiOutlineDisconnect className="disconnected" />
+                        ) : (
+                          ''
+                        )}
+                      </div>
+                      {i > 0 ? (
+                        <div className="mini">
+                          {timeDisplay(timestamp - queue[0].timestamp)}
+                        </div>
+                      ) : null}
                     </div>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="queue">
-          <p>Other Players</p>
-          <ul>
-            {activePlayers.map(({ id, name, connected }) => (
-              <li key={id}>
-                <div className={`name ${!connected ? 'dim' : ''}`}>
-                  {name}
-                  {!connected ? (
-                    <AiOutlineDisconnect className="disconnected" />
-                  ) : (
-                    ''
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="queue">
+              <p>Other Players</p>
+              <ul>
+                {activePlayers.map(({ id, name, connected }) => (
+                  <li key={id}>
+                    <div className={`name ${!connected ? 'dim' : ''}`}>
+                      {name}
+                      {!connected ? (
+                        <AiOutlineDisconnect className="disconnected" />
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
       </Container>
+
     </div>
+
   );
 }
