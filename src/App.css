@@ -491,6 +491,32 @@ body {
   margin: 20px;
 }
 
+.category-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px;
+}
+
+.category-button {
+  background-color: var(--lightBackgroundColor);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.category-button:hover {
+  background-color: var(--hoverBlueColor);
+}
+
+.category-button.selected {
+  background-color: var(--brightBlueColor);
+}
+
 .room-code-container {
   display: flex;
   flex-direction: column;

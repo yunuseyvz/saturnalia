@@ -68,12 +68,13 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
 
   useEffect(() => {
     // Update local state when game state changes or on initial render
-    const currentQuestion = G.questions[G.currentQuestionIndex];
-    setQuestion(currentQuestion.question);
+    const filteredQuestions = G.questions.filter(q => q.category === category);
+    const currentQuestion = filteredQuestions[currentQuestionIndex];
+    setQuestion(currentQuestion ? currentQuestion.question : '');
     setCategory(G.category); // Ensure category is updated from G.category
     setCurrentQuestionIndex(G.currentQuestionIndex);
-    setTotalQuestions(G.questions.filter(q => q.category === G.category).length);
-  }, [G.questions, G.currentQuestionIndex, G.category, G.question]);
+    setTotalQuestions(filteredQuestions.length);
+  }, [G.questions, G.currentQuestionIndex, G.category, G.question, category, currentQuestionIndex]);
 
   const attemptBuzz = () => {
     if (!buzzed) {
@@ -146,8 +147,10 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const handleCategoryChange = (event) => {
     const newCategory = event.target.value;
     setCategory(newCategory);
+    const filteredQuestions = G.questions.filter(q => q.category === newCategory);
     setCurrentQuestionIndex(0);
-    setTotalQuestions(G.questions.filter(q => q.category === newCategory).length);
+    setTotalQuestions(filteredQuestions.length);
+    setQuestion(filteredQuestions[0].question); // Set the first question of the new category
     moves.changeCategory(newCategory); // Ensure this updates the game state
   };
 
