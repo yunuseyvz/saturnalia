@@ -144,13 +144,23 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     }
   };
 
-  const handleCategoryChange = (event) => {
-    const newCategory = event.target.value;
+  const customSelectStyles = {
+    backgroundColor: '#f0f0f0',
+    borderRadius: '8px',
+    padding: '10px',
+    fontSize: '16px',
+    color: '#333',
+    border: '2px solid #ccc',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  };
+
+  const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
     const filteredQuestions = G.questions.filter(q => q.category === newCategory);
     setCurrentQuestionIndex(0);
     setTotalQuestions(filteredQuestions.length);
-    setQuestion(filteredQuestions[0].question); // Set the first question of the new category
+    setQuestion(filteredQuestions[0]?.question || ''); // Set the first question of the new category
     moves.changeCategory(newCategory); // Ensure this updates the game state
   };
 
@@ -187,18 +197,20 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           {ctx.phase === 'lobby' ? (
             <>
               {isHost ? (
-                <div className="category-select">
-                  <select id="category" value={category} onChange={handleCategoryChange}>
-                    {G.categories.map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat}
-                      </option>
-                    ))}
-                  </select>
+                <div className="category-buttons">
+                  {G.categories.map((cat) => (
+                    <button
+                      key={cat}
+                      className={`category-button ${category === cat ? 'selected' : ''}`}
+                      onClick={() => handleCategoryChange(cat)}
+                    >
+                      {cat}
+                    </button>
+                  ))}
                 </div>
               ) : null}
               {isHost ? (
-                <button onClick={() => moves.startGame()}>Start Game</button>
+                <button onClick={() => moves.startGame()} disabled={!category}>Start Game</button>
               ) : (
                 <p>Waiting for the host to start the game...</p>
               )}

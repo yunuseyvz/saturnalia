@@ -95,6 +95,7 @@ body {
 .App button:disabled {
   border-color: var(--disabledTextColor);
   color: var(--disabledTextColor);
+  background-color: var(--lightBackgroundColor);
 }
 
 .App button:hover:enabled {
@@ -503,10 +504,10 @@ body {
   background-color: var(--lightBackgroundColor);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 15px 30px;
+  border-radius: 30px; /* Make corners rounder */
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .category-button:hover {
@@ -515,6 +516,7 @@ body {
 
 .category-button.selected {
   background-color: var(--brightBlueColor);
+  transform: scale(1.1);
 }
 
 .room-code-container {
@@ -559,4 +561,52 @@ body {
 .custom-modal .btn-secondary {
   background-color: #007bff;
   border-color: #007bff;
+}
+
+.category-select select {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-select select:hover {
+  background-color: #e0e0e0;
+  border-color: #bbb;
+}
+
+.category-select select:focus {
+  outline: none;
+  border-color: #888;
+}
+
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px;
+}
+
+.category-button {
+  background-color: var(--lightBackgroundColor);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px; /* Make corners rounder */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.category-button:hover {
+  background-color: var(--hoverBlueColor);
+}
+
+.category-button.selected {
+  background-color: var(--brightBlueColor);
+  transform: scale(1.1);
 }
