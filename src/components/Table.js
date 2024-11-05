@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
 import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode } from 'react-icons/ai';
-import { Container, Modal, Button } from 'react-bootstrap';
+import { Container, Modal, Button, Carousel } from 'react-bootstrap'; // Import Carousel
 import Header from '../components/Header';
 import '../App.css';
 import QRCode from "react-qr-code";
@@ -234,10 +234,16 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             </>
           ) : (
             <>
-              <div className="question-box" ref={questionBoxRef}>
-                <p className="uppercase">{category}</p>
-                <p className="question">{question}</p>
-              </div>
+              <Carousel activeIndex={currentQuestionIndex} controls={false} indicators={false} onSelect={isHost ? nextQuestion : null}>
+                {G.questions.filter(q => q.category === category).map((q, index) => (
+                  <Carousel.Item key={index}>
+                    <div className="question-box" ref={questionBoxRef}>
+                      <p className="uppercase">{category}</p>
+                      <p className="question">{q.question}</p>
+                    </div>
+                  </Carousel.Item>
+                ))}
+              </Carousel>
               <div className="question-counter-container">
                 <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
                 {isHost ? (
