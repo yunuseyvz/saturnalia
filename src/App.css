@@ -610,3 +610,8 @@ body {
   background-color: var(--brightBlueColor);
   transform: scale(1.1);
 }
+
+.host-player .name {
+  color: lightgreen;
+  font-weight: bold;
+}

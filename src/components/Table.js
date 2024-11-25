@@ -218,14 +218,10 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                 <p>Players</p>
                 <ul>
                   {activePlayers.map(({ id, name, connected }) => (
-                    <li key={id}>
+                    <li key={id} className={id === firstPlayer.id ? 'host-player' : ''}>
                       <div className={`name ${!connected ? 'dim' : ''}`}>
-                        {name}
-                        {!connected ? (
-                          <AiOutlineDisconnect className="disconnected" />
-                        ) : (
-                          ''
-                        )}
+                        {name} {id === firstPlayer.id ? '(host)' : ''}
+                        {!connected ? <AiOutlineDisconnect className="disconnected" /> : ''}
                       </div>
                     </li>
                   ))}
@@ -234,7 +230,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             </>
           ) : (
             <>
-              <Carousel activeIndex={currentQuestionIndex} controls={false} indicators={false} onSelect={isHost ? nextQuestion : null}>
+              <Carousel activeIndex={currentQuestionIndex} controls={false} indicators={false}>
                 {G.questions.filter(q => q.category === category).map((q, index) => (
                   <Carousel.Item key={index}>
                     <div className="question-box" ref={questionBoxRef}>
@@ -247,27 +243,35 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
               <div className="question-counter-container">
                 <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
                 {isHost ? (
-                  <button className="next-question-button" onClick={nextQuestion}>
-                    <AiOutlineArrowRight size={24} />
-                  </button>
+                  currentQuestionIndex < totalQuestions - 1 ? (
+                    <button className="next-question-button" onClick={nextQuestion}>
+                      <AiOutlineArrowRight size={24} />
+                    </button>
+                  ) : (
+                    <button className="stop-game-button" onClick={() => moves.stopGame()}>
+                      Stop
+                    </button>
+                  )
                 ) : null}
               </div>
               {!isConnected ? (
                 <p className="warning">Disconnected - attempting to reconnect...</p>
               ) : null}
-              <div id="buzzer" style={{ margin: '20px 0' }}>
-                <button
-                  ref={buzzButton}
-                  disabled={buzzed || G.locked}
-                  onClick={() => {
-                    if (!buzzed && !G.locked) {
-                      attemptBuzz();
-                    }
-                  }}
-                >
-                  {G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
-                </button>
-              </div>
+              {!isHost ? (
+                <div id="buzzer" style={{ margin: '20px 0' }}>
+                  <button
+                    ref={buzzButton}
+                    disabled={buzzed || G.locked}
+                    onClick={() => {
+                      if (!buzzed && !G.locked) {
+                        attemptBuzz();
+                      }
+                    }}
+                  >
+                    {G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
+                  </button>
+                </div>
+              ) : null}
               {isHost ? (
                 <div className="settings" style={{ margin: '20px 0' }}>
                   <div className="button-container">
@@ -305,21 +309,10 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
               <ul>
                 {buzzedPlayers.map(({ id, name, timestamp, connected }, i) => (
                   <li key={id} className={isHost ? 'resettable' : null}>
-                    <div
-                      className="player-sign"
-                      onClick={() => {
-                        if (isHost) {
-                          moves.resetBuzzer(id);
-                        }
-                      }}
-                    >
+                    <div className="player-sign" onClick={() => { if (isHost) { moves.resetBuzzer(id); } }}>
                       <div className={`name ${!connected ? 'dim' : ''}`}>
-                        {name}
-                        {!connected ? (
-                          <AiOutlineDisconnect className="disconnected" />
-                        ) : (
-                          ''
-                        )}
+                        {name} {id === firstPlayer.id ? '(host)' : ''}
+                        {!connected ? <AiOutlineDisconnect className="disconnected" /> : ''}
                       </div>
                       {i > 0 ? (
                         <div className="mini">
@@ -335,14 +328,10 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
               <p>Other Players</p>
               <ul>
                 {activePlayers.map(({ id, name, connected }) => (
-                  <li key={id}>
+                  <li key={id} className={id === firstPlayer.id ? 'host-player' : ''}>
                     <div className={`name ${!connected ? 'dim' : ''}`}>
-                      {name}
-                      {!connected ? (
-                        <AiOutlineDisconnect className="disconnected" />
-                      ) : (
-                        ''
-                      )}
+                      {name} {id === firstPlayer.id ? '(host)' : ''}
+                      {!connected ? <AiOutlineDisconnect className="disconnected" /> : ''}
                     </div>
                   </li>
                 ))}
