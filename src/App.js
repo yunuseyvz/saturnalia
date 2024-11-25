@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,6 +17,30 @@ function App() {
     credentials: null,
     roomID: null,
   });
+
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallButton(true);
+    });
+  }, []);
+
+  const handleInstallClick = () => {
+    setShowInstallButton(false);
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
+      } else {
+        console.log('User dismissed the A2HS prompt');
+      }
+      setDeferredPrompt(null);
+    });
+  };
 
   return (
     <div className="App">
@@ -47,6 +71,11 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      {showInstallButton && (
+        <button onClick={handleInstallClick} className="install-button">
+          Install App
+        </button>
+      )}
     </div>
   );
 }
