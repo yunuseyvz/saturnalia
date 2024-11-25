@@ -18,7 +18,7 @@ function Logo({ size = 30, color = '#2eb2ff' }) {
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: '15%', // Rounded corners
-        background: 'linear-gradient(135deg, #f0f0f0, #d9d9d9)', // Gradient background
+        background: 'linear-gradient(135deg, #f0f0f0, #f0f0f0)', // Gradient background
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)', // Modern shadow
         overflow: 'hidden', // Ensure the SVG doesn't overflow the container
         marginRight: '15px',
