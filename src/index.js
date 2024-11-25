@@ -3,13 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import ReactPWAInstallProvider, { useReactPWAInstall } from "react-pwa-install";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReactPWAInstallProvider enableLogging>
-      <App />
-    </ReactPWAInstallProvider>,
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
