@@ -5,7 +5,7 @@
 
 Simple multiplayer buzzer system with quiz questions
 
-https://saturnalia.onrender.com
+<https://saturnalia.onrender.com>
 
 (Note: Initial loading could take up to 60 seconds, as this runs on a free instance of Render)
 
@@ -24,14 +24,17 @@ Built using Create React App and boardgame.io
 - **Emote Reactions**
 - **Different Buzzers for each Player**
 - **Fortune Wheel**
-- **Pre-Game Lobby** 
+- **Pre-Game Lobby**
+- **2 Modes: Group Mode (like now basically) and FFA (rissa) with multiple choice**
+- **Host should see the answer of the question**
 
 ### Saturnalia?
+
 Felt cute
 
 ### Fork Information
 
-I forked this project from https://github.com/wsun/multibuzzer.
+I forked this project from <https://github.com/wsun/multibuzzer>.
 
 ### Development
 
