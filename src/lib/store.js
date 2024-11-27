@@ -12,7 +12,7 @@ function shuffleArray(array) {
 function prepareQuestions() {
   let allQuestions = [];
   Object.keys(questions).forEach(category => {
-    const categoryQuestions = questions[category].map(q => ({ category, question: q }));
+    const categoryQuestions = questions[category].map(q => ({ category, question: q.question, answer: q.answer }));
     allQuestions = allQuestions.concat(shuffleArray(categoryQuestions));
   });
   return allQuestions;

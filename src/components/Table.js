@@ -15,6 +15,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const [soundPlayed, setSoundPlayed] = useState(false);
   const [question, setQuestion] = useState(G.question);
   const [category, setCategory] = useState(G.category);
+  const [answer, setAnswer] = useState(G.answer);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(G.currentQuestionIndex || 0);
   const [totalQuestions, setTotalQuestions] = useState(G.questions.length);
   const buzzButton = useRef(null);
@@ -236,6 +237,9 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                     <div className="question-box" ref={questionBoxRef}>
                       <p className="uppercase">{category}</p>
                       <p className="question">{q.question}</p>
+                      {isHost ? (
+                        <p className="answer">{"Answer: " + q.answer}</p>
+                      ) : null}
                     </div>
                   </Carousel.Item>
                 ))}
