@@ -194,20 +194,22 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           {isHost ? (
             <>
               <p className="host">You are the host</p>
-              <p className="game-mode">Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : 'Standard'}</p>
             </>
           ) : (
             <>
               <p className="player">You are a player</p>
-              <p className="game-mode">Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : 'Standard'}</p>
+              <p className="game-mode">
+                Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : G.gameMode === 'standard' ? 'Standard' : 'Unset'}
+              </p>
             </>
           )}
           {ctx.phase === 'lobby' ? (
             <>
               {isHost && !G.gameMode ? (
                 <div className="game-mode-selection">
-                  <p>Select Question Set:</p>
+                  <p>Select Mode:</p>
                   <button
+                    className="game-mode-button"
                     onClick={() => {
                       moves.setGameMode('standard');
                       setSelectedGameMode('standard');
@@ -216,27 +218,41 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                     Standard
                   </button>
                   <button
+                    className="game-mode-button"
                     onClick={() => {
                       moves.setGameMode('multipleChoice');
                       setSelectedGameMode('multipleChoice');
                     }}
                   >
-                    rissa
+                    Rissa
                   </button>
                 </div>
               ) : null}
               {isHost && G.gameMode ? (
-                <div className="category-buttons">
-                  {G.categories.map((cat) => (
+                <>
+                  <div className="change-game-mode-container">
                     <button
-                      key={cat}
-                      className={`category-button ${category === cat ? 'selected' : ''}`}
-                      onClick={() => handleCategoryChange(cat)}
+                      className="change-game-mode-button"
+                      onClick={() => {
+                        moves.setGameMode(null);
+                        setSelectedGameMode(null);
+                      }}
                     >
-                      {cat}
+                      Change Game Mode
                     </button>
-                  ))}
-                </div>
+                  </div>
+                  <div className="category-buttons">
+                    {G.categories.map((cat) => (
+                      <button
+                        key={cat}
+                        className={`category-button ${category === cat ? 'selected' : ''}`}
+                        onClick={() => handleCategoryChange(cat)}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+                </>
               ) : null}
               {isHost && G.selectedCategory ? (
                 <button onClick={() => moves.startGame()}>Start Game</button>
