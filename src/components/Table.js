@@ -170,6 +170,11 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     setShowQRCode(!showQRCode);
   };
 
+  const selectRandomCategory = () => {
+    const randomCategory = G.categories[Math.floor(Math.random() * G.categories.length)];
+    handleCategoryChange(randomCategory);
+  };
+  
   return (
     <div className="App">
       <Header
@@ -194,13 +199,12 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           {isHost ? (
             <>
               <p className="host">You are the host</p>
+              <p className="game-mode">Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : G.gameMode === 'standard' ? 'Standard' : 'Unset'}</p>
             </>
           ) : (
             <>
               <p className="player">You are a player</p>
-              <p className="game-mode">
-                Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : G.gameMode === 'standard' ? 'Standard' : 'Unset'}
-              </p>
+              <p className="game-mode">Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : G.gameMode === 'standard' ? 'Standard' : 'Unset'}</p>
             </>
           )}
           {ctx.phase === 'lobby' ? (
@@ -251,6 +255,12 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                         {cat}
                       </button>
                     ))}
+                    <button
+                      className="category-button"
+                      onClick={selectRandomCategory}
+                    >
+                      Random
+                    </button>
                   </div>
                 </>
               ) : null}
@@ -285,7 +295,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                         <p className="answer">{"Answer: " + q.answer}</p>
                       ) : null}
                     </div>
-                    {/* Display options in a separate box if available */}
                     {q.options && (
                       <div className="options-box">
                         {q.options.map((option, idx) => (
@@ -401,7 +410,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           </>
         )}
       </Container>
-
+  
       <Modal show={showQRCode} onHide={toggleQRCode} centered className="custom-modal">
         <Modal.Header closeButton className="justify-content-center">
           <Modal.Title className="w-100 text-center">Scan QR Code to join</Modal.Title>
