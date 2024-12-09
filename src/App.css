@@ -672,3 +672,85 @@ body {
 .change-game-mode-button:hover {
   background-color: #ff9900;
 }
+
+.emoji-reaction {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  z-index: 1000; /* Ensure it is on top of other elements */
+  animation: slideFadeInOut 2s ease-in-out;
+}
+
+@keyframes slideFadeInOut {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(20px);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(-20px);
+  }
+}
+
+.emoji-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.emoji-bubble {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+  z-index: 1000;
+}
+
+.emoji-bubble.open {
+  width: 250px;
+  height: 250px;
+  background-color: #0056b3;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.emoji-bubble-icon {
+  font-size: 2rem;
+  color: white;
+}
+
+.emoji-button {
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.emoji-button:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.2);
+}
+
+.emoji-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #007bff;
+}

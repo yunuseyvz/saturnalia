@@ -7,6 +7,8 @@ import Header from '../components/Header';
 import '../App.css';
 import QRCode from "react-qr-code";
 
+const emojis = ['😂', '😍', '😎', '😡', '👍', '🤨'];
+
 export default function Table({ G, ctx, moves, playerID, gameMetadata, headerData, gameID, isConnected }) {
   const [loaded, setLoaded] = useState(false);
   const [buzzed, setBuzzer] = useState(some(G.queue, (o) => o.id === playerID));
@@ -23,6 +25,8 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const questionBoxRef = useRef(null);
   const [showQRCode, setShowQRCode] = useState(false);
   const [selectedGameMode, setSelectedGameMode] = useState(G.gameMode);
+  const [emojiReactions, setEmojiReactions] = useState([]);
+  const [isEmojiBubbleOpen, setIsEmojiBubbleOpen] = useState(false);
 
   const buzzSound = new Howl({
     src: [
@@ -77,6 +81,16 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     setCurrentQuestionIndex(G.currentQuestionIndex);
     setTotalQuestions(filteredQuestions.length);
   }, [G.questions, G.currentQuestionIndex, G.category, G.question, category, currentQuestionIndex]);
+
+  useEffect(() => {
+    if (G.emojiReaction) {
+      setEmojiReactions([G.emojiReaction]);
+      setTimeout(() => {
+        setEmojiReactions([]);
+        moves.clearEmojiReactions();
+      }, 2000);
+    }
+  }, [G.emojiReaction]);
 
   const attemptBuzz = () => {
     if (!buzzed) {
@@ -146,17 +160,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     }
   };
 
-  const customSelectStyles = {
-    backgroundColor: '#f0f0f0',
-    borderRadius: '8px',
-    padding: '10px',
-    fontSize: '16px',
-    color: '#333',
-    border: '2px solid #ccc',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-  };
-
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
     const filteredQuestions = G.questions.filter(q => q.category === newCategory);
@@ -174,7 +177,15 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     const randomCategory = G.categories[Math.floor(Math.random() * G.categories.length)];
     handleCategoryChange(randomCategory);
   };
-  
+
+  const handleEmojiClick = (emoji) => {
+    moves.addEmojiReaction(emoji);
+  };
+
+  const toggleEmojiBubble = () => {
+    setIsEmojiBubbleOpen(!isEmojiBubbleOpen);
+  };
+
   return (
     <div className="App">
       <Header
@@ -410,7 +421,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           </>
         )}
       </Container>
-  
+
       <Modal show={showQRCode} onHide={toggleQRCode} centered className="custom-modal">
         <Modal.Header closeButton className="justify-content-center">
           <Modal.Title className="w-100 text-center">Scan QR Code to join</Modal.Title>
@@ -424,6 +435,27 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <div className={`emoji-bubble ${isEmojiBubbleOpen ? 'open' : ''}`} onClick={toggleEmojiBubble}>
+        <span className="emoji-bubble-icon">😊</span>
+        {isEmojiBubbleOpen && (
+          <div className="emoji-selection">
+            {emojis.map((emoji, idx) => (
+              <button key={idx} className="emoji-button" onClick={() => handleEmojiClick(emoji)}>
+                {emoji}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="emoji-reactions">
+        {emojiReactions.map((reaction, idx) => (
+          <span key={idx} className="emoji-reaction">
+            {reaction.emoji}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

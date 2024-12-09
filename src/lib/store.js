@@ -67,7 +67,7 @@ function nextQuestion(G, ctx) {
   if (G.currentQuestionIndex < questions.length - 1) {
     G.currentQuestionIndex += 1;
     G.question = questions[G.currentQuestionIndex].question;
-    G.category = questions[G.currentQuestionIndex].category; // Update the category
+    G.category = questions[G.currentQuestionIndex].category;
     resetBuzzers(G);
   }
 }
@@ -92,7 +92,15 @@ function stopGame(G, ctx) {
 function setGameMode(G, ctx, mode) {
   G.gameMode = mode;
   G.questions = mode === 'standard' ? prepareQuestions() : prepareMultipleChoiceQuestions();
-  G.categories = [...new Set(G.questions.map(q => q.category))]; // Update categories based on selected mode
+  G.categories = [...new Set(G.questions.map(q => q.category))];
+}
+
+function addEmojiReaction(G, ctx, emoji) {
+  G.emojiReaction = { playerID: ctx.playerID, emoji, timestamp: Date.now() };
+}
+
+function clearEmojiReactions(G) {
+  G.emojiReaction = null;
 }
 
 export const Buzzer = {
@@ -100,36 +108,37 @@ export const Buzzer = {
   minPlayers: 2,
   maxPlayers: 200,
   setup: (ctx) => {
-    const shuffledQuestions = prepareQuestions(); // Prepare the shuffled list of questions
-    const categories = Object.keys(questions); // Get the categories
-    console.log("Shuffled Questions:", shuffledQuestions); // Print the shuffled questions to the console
+    const shuffledQuestions = prepareQuestions();
+    const categories = Object.keys(questions);
+    console.log("Shuffled Questions:", shuffledQuestions);
     return {
       queue: {},
       locked: false,
-      questions: [], // Will be set after mode selection
+      questions: [],
       currentQuestionIndex: 0,
       selectedCategory: null,
       categories: Object.keys(questions),
-      gameMode: null, // Add game mode
+      gameMode: null,
+      emojiReactions: [],
     };
   },
   phases: {
     lobby: {
       start: true,
-      moves: { setGameMode, changeCategory, startGame },
+      moves: { setGameMode, changeCategory, startGame, addEmojiReaction, clearEmojiReactions },
       turn: {
         activePlayers: ActivePlayers.ALL,
       },
     },
     play: {
-      moves: { buzz, resetBuzzer, resetBuzzers, toggleLock, nextQuestion, changeCategory, stopGame },
+      moves: { buzz, resetBuzzer, resetBuzzers, toggleLock, nextQuestion, changeCategory, stopGame, addEmojiReaction, clearEmojiReactions },
       turn: {
         activePlayers: ActivePlayers.ALL,
       },
       onEnd: (G, ctx) => {
-        // Reset the game state when transitioning back to the lobby
         G.currentQuestionIndex = 0;
         resetBuzzers(G);
+        G.emojiReactions = []; 
       },
     },
   },
