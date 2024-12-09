@@ -1,5 +1,6 @@
 import { ActivePlayers } from 'boardgame.io/core';
 import { questions } from './questions'; // Import questions
+import { questionsMultipleChoice } from './questionsMultipleChoice'; // Import multiple choice questions
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -13,6 +14,20 @@ function prepareQuestions() {
   let allQuestions = [];
   Object.keys(questions).forEach(category => {
     const categoryQuestions = questions[category].map(q => ({ category, question: q.question, answer: q.answer }));
+    allQuestions = allQuestions.concat(shuffleArray(categoryQuestions));
+  });
+  return allQuestions;
+}
+
+function prepareMultipleChoiceQuestions() {
+  let allQuestions = [];
+  Object.keys(questionsMultipleChoice).forEach(category => {
+    const categoryQuestions = questionsMultipleChoice[category].map(q => ({
+      category,
+      question: q.question,
+      options: q.options,
+      answer: q.answer
+    }));
     allQuestions = allQuestions.concat(shuffleArray(categoryQuestions));
   });
   return allQuestions;
@@ -74,6 +89,12 @@ function stopGame(G, ctx) {
   ctx.events.setPhase('lobby');
 }
 
+function setGameMode(G, ctx, mode) {
+  G.gameMode = mode;
+  G.questions = mode === 'standard' ? prepareQuestions() : prepareMultipleChoiceQuestions();
+  G.categories = [...new Set(G.questions.map(q => q.category))]; // Update categories based on selected mode
+}
+
 export const Buzzer = {
   name: 'buzzer',
   minPlayers: 2,
@@ -85,18 +106,17 @@ export const Buzzer = {
     return {
       queue: {},
       locked: false,
-      questions: shuffledQuestions, // Initialize with the shuffled list of questions
-      currentQuestionIndex: 0, // Initialize the current question index
-      //question: shuffledQuestions[0].question, // Set the first question
-      //category: shuffledQuestions[0].category, // Set the first category
-      selectedCategory: null, // Initialize the selected category
-      categories, // Add categories to the state
+      questions: [], // Will be set after mode selection
+      currentQuestionIndex: 0,
+      selectedCategory: null,
+      categories: Object.keys(questions),
+      gameMode: null, // Add game mode
     };
   },
   phases: {
     lobby: {
       start: true,
-      moves: { changeCategory, startGame },
+      moves: { setGameMode, changeCategory, startGame },
       turn: {
         activePlayers: ActivePlayers.ALL,
       },

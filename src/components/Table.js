@@ -22,6 +22,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const queueRef = useRef(null);
   const questionBoxRef = useRef(null);
   const [showQRCode, setShowQRCode] = useState(false);
+  const [selectedGameMode, setSelectedGameMode] = useState(G.gameMode);
 
   const buzzSound = new Howl({
     src: [
@@ -191,13 +192,40 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             </p>
           </div>
           {isHost ? (
-            <p className="host">You are the host</p>
+            <>
+              <p className="host">You are the host</p>
+              <p className="game-mode">Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : 'Standard'}</p>
+            </>
           ) : (
-            <p className="player">You are a player</p>
+            <>
+              <p className="player">You are a player</p>
+              <p className="game-mode">Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : 'Standard'}</p>
+            </>
           )}
           {ctx.phase === 'lobby' ? (
             <>
-              {isHost ? (
+              {isHost && !G.gameMode ? (
+                <div className="game-mode-selection">
+                  <p>Select Question Set:</p>
+                  <button
+                    onClick={() => {
+                      moves.setGameMode('standard');
+                      setSelectedGameMode('standard');
+                    }}
+                  >
+                    Standard
+                  </button>
+                  <button
+                    onClick={() => {
+                      moves.setGameMode('multipleChoice');
+                      setSelectedGameMode('multipleChoice');
+                    }}
+                  >
+                    rissa
+                  </button>
+                </div>
+              ) : null}
+              {isHost && G.gameMode ? (
                 <div className="category-buttons">
                   {G.categories.map((cat) => (
                     <button
@@ -210,8 +238,8 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   ))}
                 </div>
               ) : null}
-              {isHost ? (
-                <button onClick={() => moves.startGame()} disabled={!category}>Start Game</button>
+              {isHost && G.selectedCategory ? (
+                <button onClick={() => moves.startGame()}>Start Game</button>
               ) : (
                 <p>Waiting for the host to start the game...</p>
               )}
@@ -237,10 +265,23 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                     <div className="question-box" ref={questionBoxRef}>
                       <p className="uppercase">{category}</p>
                       <p className="question">{q.question}</p>
-                      {isHost ? (
+                      {!q.options && isHost ? (
                         <p className="answer">{"Answer: " + q.answer}</p>
                       ) : null}
                     </div>
+                    {/* Display options in a separate box if available */}
+                    {q.options && (
+                      <div className="options-box">
+                        {q.options.map((option, idx) => (
+                          <p
+                            key={idx}
+                            className={`option ${isHost && option === q.answer ? 'correct-answer' : ''}`}
+                          >
+                            {option}
+                          </p>
+                        ))}
+                      </div>
+                    )}
                   </Carousel.Item>
                 ))}
               </Carousel>
