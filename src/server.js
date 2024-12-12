@@ -47,7 +47,7 @@ app.use(
 server.run(
   {
     port: PORT,
-    lobbyConfig: { uuid: () => randomString(6, 'ABCDEFGHJKLMNPQRSTUVWXYZ') },
+    lobbyConfig: { uuid: () => randomString(4, 'ABCDEFGHJKLMNPQRSTUVWXYZ') },
   },
   () => {
     // rewrite rule for catching unresolved routes and redirecting to index.html

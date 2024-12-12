@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
 import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode } from 'react-icons/ai';
+import { FaQuestionCircle, FaListAlt } from 'react-icons/fa'; // Import icons
 import { Container, Modal, Button, Carousel } from 'react-bootstrap'; // Import Carousel
 import Header from '../components/Header';
 import '../App.css';
@@ -222,25 +223,26 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             <>
               {isHost && !G.gameMode ? (
                 <div className="game-mode-selection">
-                  <p>Select Mode:</p>
-                  <button
-                    className="game-mode-button"
+                  <div
+                    className="game-mode-card"
                     onClick={() => {
                       moves.setGameMode('standard');
                       setSelectedGameMode('standard');
                     }}
                   >
-                    Standard
-                  </button>
-                  <button
-                    className="game-mode-button"
+                    <FaQuestionCircle className="game-mode-card-icon" />
+                    <div className="game-mode-card-title">Standard</div>
+                  </div>
+                  <div
+                    className="game-mode-card"
                     onClick={() => {
                       moves.setGameMode('multipleChoice');
                       setSelectedGameMode('multipleChoice');
                     }}
                   >
-                    Rissa
-                  </button>
+                    <FaListAlt className="game-mode-card-icon" />
+                    <div className="game-mode-card-title">Rissa</div>
+                  </div>
                 </div>
               ) : null}
               {isHost && G.gameMode ? (
@@ -278,7 +280,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
               {isHost && G.selectedCategory ? (
                 <button onClick={() => moves.startGame()}>Start Game</button>
               ) : (
-                <p>Waiting for the host to start the game...</p>
+                !isHost && <p>Waiting for the host to start the game...</p>
               )}
               <div className="queue">
                 <p>Players</p>

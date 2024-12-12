@@ -110,7 +110,7 @@ export const Buzzer = {
   setup: (ctx) => {
     const shuffledQuestions = prepareQuestions();
     const categories = Object.keys(questions);
-    console.log("Shuffled Questions:", shuffledQuestions);
+    //console.log("Shuffled Questions:", shuffledQuestions);
     return {
       queue: {},
       locked: false,
@@ -138,7 +138,7 @@ export const Buzzer = {
       onEnd: (G, ctx) => {
         G.currentQuestionIndex = 0;
         resetBuzzers(G);
-        G.emojiReactions = []; 
+        G.emojiReactions = [];
       },
     },
   },
