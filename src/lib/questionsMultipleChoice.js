@@ -1,5 +1,5 @@
 export const questionsMultipleChoice = {
-    technology: [
+    Technology: [
         {
             question: "What does CPU stand for?",
             options: ["Central Processing Unit", "Central Process Unit", "Computer Personal Unit", "Central Processor Unit"],
@@ -11,7 +11,7 @@ export const questionsMultipleChoice = {
             answer: "ENIAC"
         }
     ],
-    movies: [
+    Movies: [
         {
             question: "Who directed the movie 'Inception'?",
             options: ["Christopher Nolan", "Steven Spielberg", "James Cameron", "Quentin Tarantino"],
@@ -28,7 +28,7 @@ export const questionsMultipleChoice = {
             answer: "Leonardo DiCaprio"
         }
     ],
-    music: [
+    Music: [
         {
             question: "Who is known as the 'King of Pop'?",
             options: ["Elvis Presley", "Michael Jackson", "Prince", "Madonna"],
@@ -50,43 +50,4 @@ export const questionsMultipleChoice = {
             answer: "Adele"
         }
     ],
-    literature: [
-        {
-            question: "Who wrote 'To Kill a Mockingbird'?",
-            options: ["Harper Lee", "Mark Twain", "F. Scott Fitzgerald", "Ernest Hemingway"],
-            answer: "Harper Lee"
-        },
-        {
-            question: "Which novel begins with the line 'Call me Ishmael'?",
-            options: ["Moby-Dick", "Pride and Prejudice", "1984", "The Great Gatsby"],
-            answer: "Moby-Dick"
-        }
-    ],
-    space: [
-        {
-            question: "What is the largest planet in our solar system?",
-            options: ["Earth", "Mars", "Jupiter", "Saturn"],
-            answer: "Jupiter"
-        },
-        {
-            question: "Who was the first person to walk on the moon?",
-            options: ["Buzz Aldrin", "Yuri Gagarin", "Neil Armstrong", "Michael Collins"],
-            answer: "Neil Armstrong"
-        },
-        {
-            question: "What is the name of the galaxy we live in?",
-            options: ["Andromeda", "Milky Way", "Whirlpool", "Sombrero"],
-            answer: "Milky Way"
-        },
-        {
-            question: "Which planet is known as the Red Planet?",
-            options: ["Venus", "Mars", "Jupiter", "Saturn"],
-            answer: "Mars"
-        },
-        {
-            question: "What is the hottest planet in our solar system?",
-            options: ["Mercury", "Venus", "Earth", "Mars"],
-            answer: "Venus"
-        }
-    ]
 };

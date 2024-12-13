@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
 import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode } from 'react-icons/ai';
-import { FaQuestionCircle, FaListAlt } from 'react-icons/fa'; // Import icons
-import { Container, Modal, Button, Carousel } from 'react-bootstrap'; // Import Carousel
+import { FaQuestionCircle, FaListAlt, FaCopy, FaCrown, FaUser, FaGamepad, FaTable, FaList, FaPeopleCarry, FaMandalorian, FaBaby, FaHippo, FaRandom, FaPlay } from 'react-icons/fa'; // Import icons
+import { Container, Modal, Button, Carousel, Spinner } from 'react-bootstrap'; // Import Carousel and Spinner
 import Header from '../components/Header';
 import '../App.css';
 import QRCode from "react-qr-code";
@@ -28,6 +28,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const [selectedGameMode, setSelectedGameMode] = useState(G.gameMode);
   const [emojiReactions, setEmojiReactions] = useState([]);
   const [isEmojiBubbleOpen, setIsEmojiBubbleOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(G.selectedCategory);
 
   const buzzSound = new Howl({
     src: [
@@ -187,6 +188,19 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     setIsEmojiBubbleOpen(!isEmojiBubbleOpen);
   };
 
+  const [copySuccess, setCopySuccess] = useState('');
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(gameID);
+    setCopySuccess('Copied!');
+    setTimeout(() => setCopySuccess(''), 2000); // Clear the message after 2 seconds
+  };
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    handleCategoryChange(category);
+  };
+
   return (
     <div className="App">
       <Header
@@ -208,17 +222,27 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
               <strong>Room {gameID}</strong> <AiOutlineQrcode className="qr-icon" />
             </p>
           </div>
-          {isHost ? (
-            <>
-              <p className="host">You are the host</p>
-              <p className="game-mode">Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : G.gameMode === 'standard' ? 'Standard' : 'Unset'}</p>
-            </>
-          ) : (
-            <>
-              <p className="player">You are a player</p>
-              <p className="game-mode">Game Mode: {G.gameMode === 'multipleChoice' ? 'Rissa' : G.gameMode === 'standard' ? 'Standard' : 'Unset'}</p>
-            </>
-          )}
+          <div className="status-container">
+            {isHost ? (
+              <p className="host">
+                <FaCrown className="role-icon host-icon" /> Host: {players.find((p) => p.id === playerID)?.name}
+              </p>
+            ) : (
+              <p className="player">
+                <FaUser className="role-icon player-icon" /> Player: {players.find((p) => p.id === playerID)?.name}
+              </p>
+            )}
+            <p className="game-mode">
+              <FaGamepad className="game-mode-icon" /> Game Mode:
+              <span style={{ marginRight: '5px' }}></span>
+              {G.gameMode === 'multipleChoice' ? 'Rissa' : G.gameMode === 'standard' ? 'Standard' : <span className="loading-dots" style={{ marginLeft: '5px' }}></span>}
+            </p>
+            <p className="category">
+              <FaList className="category-icon" /> Category:
+              <span style={{ marginRight: '5px' }}></span>
+              {category ? category : <span className="loading-dots" style={{ marginLeft: '5px' }}></span>}
+            </p>
+          </div>
           {ctx.phase === 'lobby' ? (
             <>
               {isHost && !G.gameMode ? (
@@ -230,8 +254,20 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                       setSelectedGameMode('standard');
                     }}
                   >
-                    <FaQuestionCircle className="game-mode-card-icon" />
+                    <FaBaby className="game-mode-card-icon" />
                     <div className="game-mode-card-title">Standard</div>
+                    <div className="game-mode-card-description">Buzzin</div>
+                  </div>
+                  <div
+                    className="game-mode-card"
+                    onClick={() => {
+                      moves.setGameMode('standard');
+                      setSelectedGameMode('standard');
+                    }}
+                  >
+                    <FaHippo className="game-mode-card-icon" />
+                    <div className="game-mode-card-title">Group</div>
+                    <div className="game-mode-card-description">Questions</div>
                   </div>
                   <div
                     className="game-mode-card"
@@ -240,8 +276,9 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                       setSelectedGameMode('multipleChoice');
                     }}
                   >
-                    <FaListAlt className="game-mode-card-icon" />
+                    <FaMandalorian className="game-mode-card-icon" />
                     <div className="game-mode-card-title">Rissa</div>
+                    <div className="game-mode-card-description">Multiple-choice</div>
                   </div>
                 </div>
               ) : null}
@@ -255,32 +292,46 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                         setSelectedGameMode(null);
                       }}
                     >
-                      Change Game Mode
+                      <FaGamepad className="change-game-mode-icon" /> Change Game Mode
                     </button>
                   </div>
-                  <div className="category-buttons">
+                  <div className="category-selection">
                     {G.categories.map((cat) => (
-                      <button
+                      <div
                         key={cat}
-                        className={`category-button ${category === cat ? 'selected' : ''}`}
-                        onClick={() => handleCategoryChange(cat)}
+                        className={`category-card ${category === cat ? 'selected' : ''}`}
+                        onClick={() => handleCategorySelect(cat)}
                       >
-                        {cat}
-                      </button>
+                        <div className="category-card-title">{cat}</div>
+                      </div>
                     ))}
-                    <button
-                      className="category-button"
+                    <div
+                      className="category-card"
                       onClick={selectRandomCategory}
                     >
-                      Random
-                    </button>
+                      <div className="category-card-title">Random</div>
+                    </div>
                   </div>
                 </>
               ) : null}
-              {isHost && G.selectedCategory ? (
-                <button onClick={() => moves.startGame()}>Start Game</button>
+              {isHost && G.category ? (
+                <button
+                  className="start-game-button"
+                  onClick={() => moves.startGame()}
+                >
+                  <FaPlay className="start-game-icon" /> Start Game
+                </button>
               ) : (
-                !isHost && <p>Waiting for the host to start the game...</p>
+                !isHost && (
+                  <div className="waiting-for-host">
+                    <p>Waiting for host...</p>
+                    <div className="spinner-container">
+                      <Spinner animation="grow" role="status" className="slow-spinner">
+                        <span className="sr-only">Loading...</span>
+                      </Spinner>
+                    </div>
+                  </div>
+                )
               )}
               <div className="queue">
                 <p>Players</p>
@@ -288,7 +339,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   {activePlayers.map(({ id, name, connected }) => (
                     <li key={id} className={id === firstPlayer.id ? 'host-player' : ''}>
                       <div className={`name ${!connected ? 'dim' : ''}`}>
-                        {name} {id === firstPlayer.id ? '(host)' : ''}
+                        {name} {id === firstPlayer.id ? <FaCrown className="host-icon" /> : ''}
                         {!connected ? <AiOutlineDisconnect className="disconnected" /> : ''}
                       </div>
                     </li>
@@ -302,7 +353,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                 {G.questions.filter(q => q.category === category).map((q, index) => (
                   <Carousel.Item key={index}>
                     <div className="question-box" ref={questionBoxRef}>
-                      <p className="uppercase">{category}</p>
                       <p className="question">{q.question}</p>
                       {!q.options && isHost ? (
                         <p className="answer">{"Answer: " + q.answer}</p>
@@ -394,7 +444,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   <li key={id} className={isHost ? 'resettable' : null}>
                     <div className="player-sign" onClick={() => { if (isHost) { moves.resetBuzzer(id); } }}>
                       <div className={`name ${!connected ? 'dim' : ''}`}>
-                        {name} {id === firstPlayer.id ? '(host)' : ''}
+                        {name} {id === firstPlayer.id ? <FaCrown className="host-icon" /> : ''}
                         {!connected ? <AiOutlineDisconnect className="disconnected" /> : ''}
                       </div>
                       {i > 0 ? (
@@ -413,7 +463,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                 {activePlayers.map(({ id, name, connected }) => (
                   <li key={id} className={id === firstPlayer.id ? 'host-player' : ''}>
                     <div className={`name ${!connected ? 'dim' : ''}`}>
-                      {name} {id === firstPlayer.id ? '(host)' : ''}
+                      {name} {id === firstPlayer.id ? <FaCrown className="host-icon" /> : ''}
                       {!connected ? <AiOutlineDisconnect className="disconnected" /> : ''}
                     </div>
                   </li>
@@ -426,13 +476,20 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
 
       <Modal show={showQRCode} onHide={toggleQRCode} centered className="custom-modal">
         <Modal.Header closeButton className="justify-content-center">
-          <Modal.Title className="w-100 text-center">Scan QR Code to join</Modal.Title>
+          <Modal.Title className="w-100 text-center">Room Code: {gameID} </Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
+          <div className="d-flex justify-content-center align-items-center mb-3">
+            <h4 className="mb-0 mr-2">Scan QR Code to join</h4>
+            <Button variant="link" onClick={copyToClipboard} className="copy-button">
+              <FaCopy />
+            </Button>
+          </div>
+          {copySuccess && <div className="mb-2 text-success">{copySuccess}</div>}
           <QRCode value={"saturnalia.onrender.com/" + gameID} />
         </Modal.Body>
         <Modal.Footer className="justify-content-center">
-          <Button variant="secondary" onClick={toggleQRCode}>
+          <Button variant="secondary" onClick={toggleQRCode} className="btn btn-secondary">
             Close
           </Button>
         </Modal.Footer>

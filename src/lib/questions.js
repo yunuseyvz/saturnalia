@@ -1,5 +1,5 @@
 export const questions = {
-    science: [
+    Science: [
         {
             question: "What is the chemical symbol for water?",
             answer: "H2O"
@@ -41,7 +41,7 @@ export const questions = {
             answer: "100°C"
         }
     ],
-    history: [
+    History: [
         {
             question: "Who was the first president of the United States?",
             answer: "George Washington"
@@ -83,7 +83,7 @@ export const questions = {
             answer: "Jamestown"
         }
     ],
-    geography: [
+    Geography: [
         {
             question: "What is the capital of France?",
             answer: "Paris"
@@ -125,7 +125,7 @@ export const questions = {
             answer: "Missouri"
         }
     ],
-    literature: [
+    Literature: [
         {
             question: "Who wrote 'Romeo and Juliet'?",
             answer: "William Shakespeare"
@@ -167,7 +167,7 @@ export const questions = {
             answer: "J.D. Salinger"
         }
     ],
-    sports: [
+    Sports: [
         {
             question: "How many players are there in a soccer team?",
             answer: "11"

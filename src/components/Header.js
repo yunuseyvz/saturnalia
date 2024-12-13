@@ -4,6 +4,7 @@ import { isNil } from 'lodash';
 import { useHistory } from 'react-router';
 import { leaveRoom } from '../lib/endpoints';
 import { FaVolumeUp, FaVolumeMute, FaSignOutAlt } from 'react-icons/fa'; // Import icons
+import Toggle from 'react-toggle'
 import '../App.css';
 
 function Logo({ size = 30, color = '#2eb2ff' }) {
@@ -84,14 +85,22 @@ export default function Header({
         </Navbar.Brand>
         <div className="nav-buttons">
           {!isNil(sound) ? (
-            <button className="icon-button" onClick={() => setSound()}>
-              {sound ? <FaVolumeUp /> : <FaVolumeMute />}
-            </button>
+            <div
+              className="icon-button"
+              onClick={() => setSound()}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'white' }}
+            >
+              {sound ? <FaVolumeUp style={{ color: '#4287f5' }} /> : <FaVolumeMute style={{ color: '#4287f5' }} />}
+            </div>
           ) : null}
           {clearAuth ? (
-            <button className="icon-button" onClick={() => leave()}>
-              <FaSignOutAlt />
-            </button>
+            <div
+              className="icon-button"
+              onClick={() => leave()}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'white' }}
+            >
+              <FaSignOutAlt style={{ color: '#f57171' }} />
+            </div>
           ) : null}
         </div>
       </Navbar>

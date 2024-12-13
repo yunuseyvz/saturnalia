@@ -79,6 +79,7 @@ function changeCategory(G, ctx, category) {
   G.question = filteredQuestions[0].question;
   G.category = filteredQuestions[0].category;
   resetBuzzers(G);
+  console.log('Changed category to:', category);
 }
 
 function startGame(G, ctx) {
@@ -93,6 +94,7 @@ function setGameMode(G, ctx, mode) {
   G.gameMode = mode;
   G.questions = mode === 'standard' ? prepareQuestions() : prepareMultipleChoiceQuestions();
   G.categories = [...new Set(G.questions.map(q => q.category))];
+  G.category = null;
 }
 
 function addEmojiReaction(G, ctx, emoji) {
@@ -139,6 +141,7 @@ export const Buzzer = {
         G.currentQuestionIndex = 0;
         resetBuzzers(G);
         G.emojiReactions = [];
+        G.category = null;
       },
     },
   },

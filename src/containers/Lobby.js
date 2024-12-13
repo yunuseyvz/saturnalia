@@ -106,7 +106,7 @@ export default function Lobby({ setAuth }) {
         setError(ERROR_MESSAGE[ERROR_TYPE.emptyCode]);
       } else if (name.trim().length === 0) {
         setError(ERROR_MESSAGE[ERROR_TYPE.name]);
-      } else if (room.trim().length !== 6) {
+      } else if (room.trim().length !== 4) {
         setError(ERROR_MESSAGE[ERROR_TYPE.roomCode]);
       } else {
         enterRoom(room);
