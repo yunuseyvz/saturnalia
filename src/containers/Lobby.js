@@ -207,15 +207,19 @@ export default function Lobby({ setAuth }) {
       </div>
       <div>
         <h4>Join on any device</h4>
-        <p>
-          Use your computer, smartphone, or tablet to join and start buzzing
-        </p>
+        <p>Use your computer, smartphone, or tablet to join</p>
       </div>
       <div>
         <h4>Free to use</h4>
-        <p>
-          Perfect for online quiz bowl, trivia night, or a classroom activity
-        </p>
+        <p>Perfect for online quiz bowl, trivia night, or a classroom activity</p>
+      </div>
+      <div>
+        <h4>Customizable game modes and questions</h4>
+        <p>Choose from multiple game modes and questions to suit your quiz style</p>
+      </div>
+      <div>
+        <h4>Host control</h4>
+        <p>The host has full control over the lobby, game modes, and questions</p>
       </div>
     </div>
   );

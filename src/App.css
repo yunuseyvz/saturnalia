@@ -1009,3 +1009,26 @@ body {
   margin-right: 10px;
   font-size: 1.2rem;
 }
+
+.answer-box {
+  padding-top: 18px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  max-width: 800px;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  background-color: lightgreen;
+}
+
+.answer {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c313e;
+  margin: 0;
+  padding-bottom: 10px;
+}

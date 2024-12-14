@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
 import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode } from 'react-icons/ai';
-import { FaQuestionCircle, FaListAlt, FaCopy, FaCrown, FaUser, FaGamepad, FaTable, FaList, FaPeopleCarry, FaMandalorian, FaBaby, FaHippo, FaRandom, FaPlay } from 'react-icons/fa'; // Import icons
+import { FaQuestionCircle, FaListAlt, FaCopy, FaCrown, FaUser, FaGamepad, FaTable, FaList, FaPeopleCarry, FaMandalorian, FaBaby, FaHippo, FaRandom, FaPlay, FaCog } from 'react-icons/fa'; // Import icons
 import { Container, Modal, Button, Carousel, Spinner } from 'react-bootstrap'; // Import Carousel and Spinner
 import Header from '../components/Header';
 import '../App.css';
@@ -235,13 +235,25 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             <p className="game-mode">
               <FaGamepad className="game-mode-icon" /> Game Mode:
               <span style={{ marginRight: '5px' }}></span>
-              {G.gameMode === 'multipleChoice' ? 'Rissa' : G.gameMode === 'standard' ? 'Standard' : <span className="loading-dots" style={{ marginLeft: '5px' }}></span>}
+              {G.gameMode === 'multipleChoice' ? 'Rissa' : G.gameMode === 'standard' ? 'Group' : G.gameMode === 'buzz' ? 'Buzzin' : <span className="loading-dots" style={{ marginLeft: '5px' }}></span>}
+              {isHost && G.gameMode && ctx.phase === "lobby" ? (
+                <FaCog
+                  className="change-game-mode-icon"
+                  onClick={() => {
+                    moves.setGameMode(null);
+                    setSelectedGameMode(null);
+                  }}
+                  style={{ cursor: 'pointer', marginLeft: '10px' }}
+                />
+              ) : null}
             </p>
-            <p className="category">
-              <FaList className="category-icon" /> Category:
-              <span style={{ marginRight: '5px' }}></span>
-              {category ? category : <span className="loading-dots" style={{ marginLeft: '5px' }}></span>}
-            </p>
+            {G.gameMode !== 'buzz' && (
+              <p className="category">
+                <FaList className="category-icon" /> Category:
+                <span style={{ marginRight: '5px' }}></span>
+                {category ? category : <span className="loading-dots" style={{ marginLeft: '5px' }}></span>}
+              </p>
+            )}
           </div>
           {ctx.phase === 'lobby' ? (
             <>
@@ -250,13 +262,13 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   <div
                     className="game-mode-card"
                     onClick={() => {
-                      moves.setGameMode('standard');
-                      setSelectedGameMode('standard');
+                      moves.setGameMode('buzz');
+                      setSelectedGameMode('buzz');
                     }}
                   >
                     <FaBaby className="game-mode-card-icon" />
-                    <div className="game-mode-card-title">Standard</div>
-                    <div className="game-mode-card-description">Buzzin</div>
+                    <div className="game-mode-card-title">Buzzin</div>
+                    <div className="game-mode-card-description">Standard</div>
                   </div>
                   <div
                     className="game-mode-card"
@@ -282,19 +294,8 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   </div>
                 </div>
               ) : null}
-              {isHost && G.gameMode ? (
+              {isHost && G.gameMode && G.gameMode !== 'buzz' ? (
                 <>
-                  <div className="change-game-mode-container">
-                    <button
-                      className="change-game-mode-button"
-                      onClick={() => {
-                        moves.setGameMode(null);
-                        setSelectedGameMode(null);
-                      }}
-                    >
-                      <FaGamepad className="change-game-mode-icon" /> Change Game Mode
-                    </button>
-                  </div>
                   <div className="category-selection">
                     {G.categories.map((cat) => (
                       <div
@@ -314,7 +315,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   </div>
                 </>
               ) : null}
-              {isHost && G.category ? (
+              {isHost && (G.category || G.gameMode === 'buzz') ? (
                 <button
                   className="start-game-button"
                   onClick={() => moves.startGame()}
@@ -349,48 +350,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             </>
           ) : (
             <>
-              <Carousel activeIndex={currentQuestionIndex} controls={false} indicators={false}>
-                {G.questions.filter(q => q.category === category).map((q, index) => (
-                  <Carousel.Item key={index}>
-                    <div className="question-box" ref={questionBoxRef}>
-                      <p className="question">{q.question}</p>
-                      {!q.options && isHost ? (
-                        <p className="answer">{"Answer: " + q.answer}</p>
-                      ) : null}
-                    </div>
-                    {q.options && (
-                      <div className="options-box">
-                        {q.options.map((option, idx) => (
-                          <p
-                            key={idx}
-                            className={`option ${isHost && option === q.answer ? 'correct-answer' : ''}`}
-                          >
-                            {option}
-                          </p>
-                        ))}
-                      </div>
-                    )}
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-              <div className="question-counter-container">
-                <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
-                {isHost ? (
-                  currentQuestionIndex < totalQuestions - 1 ? (
-                    <button className="next-question-button" onClick={nextQuestion}>
-                      <AiOutlineArrowRight size={24} />
-                    </button>
-                  ) : (
-                    <button className="stop-game-button" onClick={() => moves.stopGame()}>
-                      Stop
-                    </button>
-                  )
-                ) : null}
-              </div>
-              {!isConnected ? (
-                <p className="warning">Disconnected - attempting to reconnect...</p>
-              ) : null}
-              {!isHost ? (
+              {G.gameMode === 'buzz' ? (
                 <div id="buzzer" style={{ margin: '20px 0' }}>
                   <button
                     ref={buzzButton}
@@ -404,6 +364,69 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                     {G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
                   </button>
                 </div>
+              ) : (
+                <>
+                  <Carousel activeIndex={currentQuestionIndex} controls={false} indicators={false}>
+                    {G.questions.filter(q => q.category === category).map((q, index) => (
+                      <Carousel.Item key={index}>
+                        <div className="question-box" ref={questionBoxRef}>
+                          <p className="question">{q.question}</p>
+                        </div>
+                        {!q.options && isHost ? (
+                          <div className="answer-box">
+                            <p className="answer">{q.answer}</p>
+                          </div>
+                        ) : null}
+                        {q.options && (
+                          <div className="options-box">
+                            {q.options.map((option, idx) => (
+                              <p
+                                key={idx}
+                                className={`option ${isHost && option === q.answer ? 'correct-answer' : ''}`}
+                              >
+                                {option}
+                              </p>
+                            ))}
+                          </div>
+                        )}
+                      </Carousel.Item>
+                    ))}
+                  </Carousel>
+                  {isHost ? null : (
+                    <div id="buzzer" style={{ margin: '20px 0' }}>
+                      <button
+                        ref={buzzButton}
+                        disabled={buzzed || G.locked}
+                        onClick={() => {
+                          if (!buzzed && !G.locked) {
+                            attemptBuzz();
+                          }
+                        }}
+                      >
+                        {G.locked ? 'Locked' : buzzed ? 'Buzzed' : 'Buzz'}
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+              {G.gameMode !== 'buzz' && (
+                <div className="question-counter-container">
+                  <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
+                  {isHost ? (
+                    currentQuestionIndex < totalQuestions - 1 ? (
+                      <button className="next-question-button" onClick={nextQuestion}>
+                        <AiOutlineArrowRight size={24} />
+                      </button>
+                    ) : (
+                      <button className="stop-game-button" onClick={() => moves.stopGame()}>
+                        Stop
+                      </button>
+                    )
+                  ) : null}
+                </div>
+              )}
+              {!isConnected ? (
+                <p className="warning">Disconnected - attempting to reconnect...</p>
               ) : null}
               {isHost ? (
                 <div className="settings" style={{ margin: '20px 0' }}>
@@ -444,7 +467,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   <li key={id} className={isHost ? 'resettable' : null}>
                     <div className="player-sign" onClick={() => { if (isHost) { moves.resetBuzzer(id); } }}>
                       <div className={`name ${!connected ? 'dim' : ''}`}>
-                        {name} {id === firstPlayer.id ? <FaCrown className="host-icon" /> : ''}
+                        {name} 
                         {!connected ? <AiOutlineDisconnect className="disconnected" /> : ''}
                       </div>
                       {i > 0 ? (
@@ -476,20 +499,18 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
 
       <Modal show={showQRCode} onHide={toggleQRCode} centered className="custom-modal">
         <Modal.Header closeButton className="justify-content-center">
-          <Modal.Title className="w-100 text-center">Room Code: {gameID} </Modal.Title>
+          <Modal.Title className="w-100 text-center">Room Code: {gameID}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-center">
           <div className="d-flex justify-content-center align-items-center mb-3">
             <h4 className="mb-0 mr-2">Scan QR Code to join</h4>
-            <Button variant="link" onClick={copyToClipboard} className="copy-button">
-              <FaCopy />
-            </Button>
           </div>
           {copySuccess && <div className="mb-2 text-success">{copySuccess}</div>}
           <QRCode value={"saturnalia.onrender.com/" + gameID} />
         </Modal.Body>
         <Modal.Footer className="justify-content-center">
-          <Button variant="secondary" onClick={toggleQRCode} className="btn btn-secondary">
+          <Button variant="secondary" onClick={toggleQRCode} className="btn btn-primary">
             Close
           </Button>
         </Modal.Footer>

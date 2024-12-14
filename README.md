@@ -16,12 +16,13 @@ Built using Create React App and boardgame.io
 - **Multiplayer Buzzer System**: Allows multiple players to join a room and buzz in response to questions.
 - **Quiz Questions**: Includes a set of quiz questions that players can answer.
 - **Host Controls**: The host can lock/unlock buzzers, reset buzzers, and move to the next question.
+- **Categories**: Organize questions into different categories for a more structured quiz experience.
+- **Game Modes**
+- **Emote Reactions**
 
-### Planned Features
+### Planned Features (maybe)
 
 - **Upload Custom Questions**: Allow users to upload their own set of questions.
-- **Categories**: Organize questions into different categories for a more structured quiz experience.
-- **Emote Reactions**
 - **Different Buzzers for each Player**
 - **Fortune Wheel**
 - **Pre-Game Lobby**
