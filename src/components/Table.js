@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
 import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode } from 'react-icons/ai';
-import { FaQuestionCircle, FaListAlt, FaCopy, FaCrown, FaUser, FaGamepad, FaTable, FaList, FaPeopleCarry, FaMandalorian, FaBaby, FaHippo, FaRandom, FaPlay, FaCog } from 'react-icons/fa'; // Import icons
+import { FaQuestionCircle, FaListAlt, FaCopy, FaCrown, FaUser, FaGamepad, FaTable, FaList, FaPeopleCarry, FaMandalorian, FaBaby, FaHippo, FaRandom, FaPlay, FaCog, FaLock, FaUnlock, FaRedo, FaStop } from 'react-icons/fa'; // Import icons
 import { Container, Modal, Button, Carousel, Spinner } from 'react-bootstrap'; // Import Carousel and Spinner
 import Header from '../components/Header';
 import '../App.css';
@@ -440,21 +440,21 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                       className="text-button"
                       onClick={() => moves.toggleLock()}
                     >
-                      {G.locked ? 'Unlock buzzers' : 'Lock buzzers'}
+                      {G.locked ? <FaUnlock /> : <FaLock />} {G.locked ? 'Unlock buzzers' : 'Lock buzzers'}
                     </button>
                   </div>
                   <div className="button-container">
                     <button
                       onClick={() => moves.resetBuzzers()}
                     >
-                      Reset all buzzers
+                      <FaRedo /> Reset all buzzers
                     </button>
                   </div>
                   <div className="button-container">
                     <button
                       onClick={() => moves.stopGame()}
                     >
-                      Stop Game
+                      <FaStop /> Stop Game
                     </button>
                   </div>
                   <div className="divider" />
