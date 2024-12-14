@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
 import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode } from 'react-icons/ai';
-import { FaQuestionCircle, FaListAlt, FaCopy, FaCrown, FaUser, FaGamepad, FaTable, FaList, FaPeopleCarry, FaMandalorian, FaBaby, FaHippo, FaRandom, FaPlay, FaCog, FaLock, FaUnlock, FaRedo, FaStop } from 'react-icons/fa'; // Import icons
+import { FaQuestionCircle, FaListAlt, FaCopy, FaCrown, FaUser, FaGamepad, FaTable, FaList, FaPeopleCarry, FaMandalorian, FaBaby, FaHippo, FaRandom, FaPlay, FaCog, FaLock, FaUnlock, FaRedo, FaStop, FaCloud, FaCloudMeatball, FaBolt, FaViacoin, FaIceCream } from 'react-icons/fa'; // Import icons
 import { Container, Modal, Button, Carousel, Spinner } from 'react-bootstrap'; // Import Carousel and Spinner
 import Header from '../components/Header';
 import '../App.css';
@@ -271,7 +271,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                       setSelectedGameMode('buzz');
                     }}
                   >
-                    <FaBaby className="game-mode-card-icon" />
+                    <FaIceCream className="game-mode-card-icon" />
                     <div className="game-mode-card-title">Buzzin</div>
                     <div className="game-mode-card-description">Standard</div>
                   </div>
@@ -293,7 +293,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                       setSelectedGameMode('multipleChoice');
                     }}
                   >
-                    <FaMandalorian className="game-mode-card-icon" />
+                    <FaBolt className="game-mode-card-icon" />
                     <div className="game-mode-card-title">Rissa</div>
                     <div className="game-mode-card-description">Multiple-choice</div>
                   </div>
@@ -306,7 +306,9 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                       <div
                         key={cat}
                         className={`category-card ${category === cat ? 'selected' : ''}`}
-                        onClick={() => handleCategorySelect(cat)}
+                        onClick={() => {
+                          handleCategorySelect(cat)
+                        }}
                       >
                         <div className="category-card-title">{cat}</div>
                       </div>
