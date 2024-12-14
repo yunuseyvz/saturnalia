@@ -750,61 +750,55 @@ body {
   }
 }
 
-.emoji-selection {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  justify-content: center;
-  margin: 10px 0;
-}
-
 .emoji-bubble {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #007bff;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: width 0.3s, height 0.3s, background-color 0.3s;
+  padding: 10px;
   z-index: 1000;
 }
 
-.emoji-bubble.open {
-  width: 250px;
-  height: 250px;
-  background-color: #0056b3;
-  flex-wrap: wrap;
-  padding: 10px;
+.emoji-bubble-icon {
+  font-size: 1.5rem;
 }
 
-.emoji-bubble-icon {
-  font-size: 2rem;
-  color: white;
+.emoji-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
 }
 
 .emoji-button {
-  background-color: #f0f0f0;
+  background: none;
   border: none;
-  border-radius: 50%;
-  padding: 5px;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s; /* Added transition */
 }
 
-.emoji-button:hover {
-  background-color: #e0e0e0; /* Updated hover color */
-  transform: scale(1.2);
+.emoji-reactions {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 1000;
 }
 
-.emoji-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #007bff;
+.emoji-reaction {
+  font-size: 3.5rem;
 }
 
 /* GAME MODE SELECTION CARDS */
