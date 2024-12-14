@@ -29,6 +29,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const [emojiReactions, setEmojiReactions] = useState([]);
   const [isEmojiBubbleOpen, setIsEmojiBubbleOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(G.selectedCategory);
+  const [emojiCooldown, setEmojiCooldown] = useState(false);
 
   const buzzSound = new Howl({
     src: [
@@ -181,7 +182,11 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   };
 
   const handleEmojiClick = (emoji) => {
-    moves.addEmojiReaction(emoji);
+    if (!emojiCooldown) {
+      moves.addEmojiReaction(emoji);
+      setEmojiCooldown(true);
+      setTimeout(() => setEmojiCooldown(false), 2000); // 2 seconds cooldown
+    }
   };
 
   const toggleEmojiBubble = () => {
@@ -310,7 +315,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                       className="category-card"
                       onClick={selectRandomCategory}
                     >
-                      <div className="category-card-title">Random</div>
+                      <><FaRandom className="category-card-icon" /><div className="category-card-title">Random</div></>
                     </div>
                   </div>
                 </>
@@ -467,7 +472,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   <li key={id} className={isHost ? 'resettable' : null}>
                     <div className="player-sign" onClick={() => { if (isHost) { moves.resetBuzzer(id); } }}>
                       <div className={`name ${!connected ? 'dim' : ''}`}>
-                        {name} 
+                        {name}
                         {!connected ? <AiOutlineDisconnect className="disconnected" /> : ''}
                       </div>
                       {i > 0 ? (
