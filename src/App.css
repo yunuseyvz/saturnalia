@@ -730,7 +730,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2rem;
+  font-size: 4rem;
   z-index: 1000; /* Ensure it is on top of other elements */
   animation: slideFadeInOut 2s ease-in-out;
 }
@@ -760,6 +760,22 @@ body {
   cursor: pointer;
   padding: 10px;
   z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+}
+
+@keyframes slideFadeInOut2 {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.emoji-bubble.open .emoji-selection {
+  animation: slideFadeInOut2 0.3s ease-in-out forwards;
 }
 
 .emoji-bubble-icon {
@@ -778,6 +794,14 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
   z-index: 1000;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.emoji-bubble.open .emoji-selection {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .emoji-button {
@@ -785,20 +809,27 @@ body {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 
-.emoji-reactions {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  z-index: 1000;
+.emoji-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.emoji-reaction {
-  font-size: 3.5rem;
+.emoji-button:hover {
+  transform: scale(1.2);
+}
+
+@keyframes float {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* GAME MODE SELECTION CARDS */

@@ -526,14 +526,18 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
         {isEmojiBubbleOpen && (
           <div className="emoji-selection">
             {emojis.map((emoji, idx) => (
-              <button key={idx} className="emoji-button" onClick={() => handleEmojiClick(emoji)}>
+              <button
+                key={idx}
+                className="emoji-button"
+                onClick={() => handleEmojiClick(emoji)}
+                disabled={emojiCooldown} // Disable button during cooldown
+              >
                 {emoji}
               </button>
             ))}
           </div>
         )}
       </div>
-
       <div className="emoji-reactions">
         {emojiReactions.map((reaction, idx) => (
           <span key={idx} className="emoji-reaction">
