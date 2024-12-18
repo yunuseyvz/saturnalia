@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
-import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode } from 'react-icons/ai';
+import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode, AiOutlineArrowLeft } from 'react-icons/ai';
 import { FaCrown, FaUser, FaGamepad, FaList, FaHippo, FaRandom, FaPlay, FaCog, FaLock, FaUnlock, FaRedo, FaStop, FaBolt, FaIceCream } from 'react-icons/fa'; // Import icons
 import { Container, Modal, Button, Carousel, Spinner } from 'react-bootstrap'; // Import Carousel and Spinner
 import Header from '../components/Header';
@@ -189,6 +189,14 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     if (currentQuestionIndex < totalQuestions - 1) {
       const nextIndex = currentQuestionIndex + 1;
       moves.nextQuestion();
+      moves.resetBuzzers();
+    }
+  };
+
+  const previousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      const prevIndex = currentQuestionIndex - 1;
+      moves.previousQuestion();
       moves.resetBuzzers();
     }
   };
@@ -451,15 +459,22 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                 <div className="question-counter-container">
                   <p className="question-counter">Question {currentQuestionIndex + 1}/{totalQuestions}</p>
                   {isHost ? (
-                    currentQuestionIndex < totalQuestions - 1 ? (
-                      <button className="next-question-button" onClick={nextQuestion}>
+                    <div className="navigation-buttons-container">
+                      <button
+                        className="previous-question-button"
+                        onClick={previousQuestion}
+                        disabled={currentQuestionIndex <= 0}
+                      >
+                        <AiOutlineArrowLeft size={24} />
+                      </button>
+                      <button
+                        className="next-question-button"
+                        onClick={nextQuestion}
+                        disabled={currentQuestionIndex >= totalQuestions - 1}
+                      >
                         <AiOutlineArrowRight size={24} />
                       </button>
-                    ) : (
-                      <button className="stop-game-button" onClick={() => moves.stopGame()}>
-                        Stop
-                      </button>
-                    )
+                    </div>
                   ) : null}
                 </div>
               )}

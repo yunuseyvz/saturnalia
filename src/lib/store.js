@@ -72,6 +72,16 @@ function nextQuestion(G, ctx) {
   }
 }
 
+function previousQuestion(G, ctx) {
+  const questions = G.selectedCategory ? filterQuestionsByCategory(G.questions, G.selectedCategory) : G.questions;
+  if (G.currentQuestionIndex > 0) {
+    G.currentQuestionIndex -= 1;
+    G.question = questions[G.currentQuestionIndex].question;
+    G.category = questions[G.currentQuestionIndex].category;
+    resetBuzzers(G);
+  }
+}
+
 function changeCategory(G, ctx, category) {
   G.selectedCategory = category;
   G.currentQuestionIndex = 0;
@@ -134,7 +144,18 @@ export const Buzzer = {
       },
     },
     play: {
-      moves: { buzz, resetBuzzer, resetBuzzers, toggleLock, nextQuestion, changeCategory, stopGame, addEmojiReaction, clearEmojiReactions },
+      moves: {
+        buzz,
+        resetBuzzer,
+        resetBuzzers,
+        toggleLock,
+        nextQuestion,
+        previousQuestion,
+        changeCategory,
+        stopGame,
+        addEmojiReaction,
+        clearEmojiReactions
+      },
       turn: {
         activePlayers: ActivePlayers.ALL,
       },
