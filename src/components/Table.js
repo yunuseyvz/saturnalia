@@ -92,6 +92,10 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
       toast(G.emojiReaction.emoji, {
         className: 'toast-custom',
         duration: 2000,
+        style: {
+          background: 'rgba(0, 0, 0, 0.0)',
+          boxShadow: 'none',
+        },
       });
       moves.clearEmojiReactions();
     }
@@ -493,9 +497,10 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                   </div>
                   <div className="button-container">
                     <button
+                      className="text-button"
                       onClick={() => moves.resetBuzzers()}
                     >
-                      <FaRedo /> Reset all buzzers
+                      <FaRedo /> Reset buzzers
                     </button>
                   </div>
                   <div className="button-container">

@@ -1083,9 +1083,19 @@ body {
   margin-right: 5px; /* Adjust margin as needed */
 }
 
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.button-container {
+  flex: 1;
+  min-width: 150px; /* Adjust as needed */
+}
+
 .toast-custom {
   background: rgba(0, 0, 0, 0.5); /* Transparent background */
-  color: white;
+  color: rgba(0, 0, 0, 0.5);
   font-size: 2rem; /* Larger font size for the emoji */
   text-align: center;
   border-radius: 10px;
