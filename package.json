@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "NODE_OPTIONS=--openssl-legacy-provider node -r esm src/server.js",
-    "dev": "concurrently \"PORT=3000 NODE_OPTIONS=--openssl-legacy-provider yarn client\" \"PORT=3001 NODE_OPTIONS=--openssl-legacy-provider yarn start\"",
+    "dev": "BROWSER=none concurrently \"PORT=3000 NODE_OPTIONS=--openssl-legacy-provider yarn client\" \"PORT=3001 NODE_OPTIONS=--openssl-legacy-provider yarn start\"",
     "client": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
     "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
@@ -30,6 +30,7 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.13.1",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^3.9.0",
     "react-pwa-install": "^1.0.12",
     "react-qr-code": "^2.0.15",

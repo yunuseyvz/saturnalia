@@ -75,11 +75,12 @@ function nextQuestion(G, ctx) {
 function changeCategory(G, ctx, category) {
   G.selectedCategory = category;
   G.currentQuestionIndex = 0;
+  G.questions = G.gameMode === 'standard' ? prepareQuestions() : prepareMultipleChoiceQuestions();
   const filteredQuestions = filterQuestionsByCategory(G.questions, category);
   G.question = filteredQuestions[0].question;
   G.category = filteredQuestions[0].category;
   resetBuzzers(G);
-  console.log('Changed category to:', category);
+  //console.log('Changed category to:', category);
 }
 
 function startGame(G, ctx) {

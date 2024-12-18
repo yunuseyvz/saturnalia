@@ -7,6 +7,7 @@ import { Container, Modal, Button, Carousel, Spinner } from 'react-bootstrap'; /
 import Header from '../components/Header';
 import '../App.css';
 import QRCode from "react-qr-code";
+import toast, { Toaster } from 'react-hot-toast';
 
 const emojis = ['😂', '😍', '😎', '😡', '👍', '🤨'];
 
@@ -107,14 +108,14 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   // spacebar will buzz
   useEffect(() => {
     function onKeydown(e) {
-      if (e.keyCode === 32 && !e.repeat) {
+      if (e.keyCode === 32 && !e.repeat && ctx.phase === 'play') {
         buzzButton.current.click();
         e.preventDefault();
       }
     }
     window.addEventListener('keydown', onKeydown);
     return () => window.removeEventListener('keydown', onKeydown);
-  }, []);
+  }, [ctx.phase]);
 
   const players = !gameMetadata
     ? []
@@ -208,6 +209,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
 
   return (
     <div className="App">
+      <Toaster />
       <Header
         auth={headerData}
         clearAuth={() =>
