@@ -9,7 +9,7 @@ import '../App.css';
 import QRCode from "react-qr-code";
 import toast, { Toaster } from 'react-hot-toast';
 
-const emojis = ['😂', '😍', '😎', '😡', '👍', '🤨'];
+const emojis = ['😂', '😍', '😎', '😡', '👍', '🤨', '😦'];
 
 export default function Table({ G, ctx, moves, playerID, gameMetadata, headerData, gameID, isConnected }) {
   const [loaded, setLoaded] = useState(false);
@@ -93,9 +93,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
         className: 'toast-custom',
         duration: 2000,
       });
-      setTimeout(() => {
-        moves.clearEmojiReactions();
-      }, 2000);
+      moves.clearEmojiReactions();
     }
   }, [G.emojiReaction]);
 
