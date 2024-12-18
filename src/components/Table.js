@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
 import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode } from 'react-icons/ai';
-import { FaQuestionCircle, FaListAlt, FaCopy, FaCrown, FaUser, FaGamepad, FaTable, FaList, FaPeopleCarry, FaMandalorian, FaBaby, FaHippo, FaRandom, FaPlay, FaCog, FaLock, FaUnlock, FaRedo, FaStop, FaCloud, FaCloudMeatball, FaBolt, FaViacoin, FaIceCream } from 'react-icons/fa'; // Import icons
+import { FaCrown, FaUser, FaGamepad, FaList, FaHippo, FaRandom, FaPlay, FaCog, FaLock, FaUnlock, FaRedo, FaStop, FaBolt, FaIceCream } from 'react-icons/fa'; // Import icons
 import { Container, Modal, Button, Carousel, Spinner } from 'react-bootstrap'; // Import Carousel and Spinner
 import Header from '../components/Header';
 import '../App.css';
@@ -27,10 +27,11 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   const questionBoxRef = useRef(null);
   const [showQRCode, setShowQRCode] = useState(false);
   const [selectedGameMode, setSelectedGameMode] = useState(G.gameMode);
-  const [emojiReactions, setEmojiReactions] = useState([]);
   const [isEmojiBubbleOpen, setIsEmojiBubbleOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(G.selectedCategory);
   const [emojiCooldown, setEmojiCooldown] = useState(false);
+  const [previousPlayers, setPreviousPlayers] = useState([]);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   const buzzSound = new Howl({
     src: [
@@ -38,7 +39,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
       `${process.env.PUBLIC_URL}/shortBuzz.mp3`,
     ],
     volume: 0.5,
-    rate: 1.5,
+    rate: 1.0,
   });
 
   const playSound = () => {
@@ -88,13 +89,42 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
 
   useEffect(() => {
     if (G.emojiReaction) {
-      setEmojiReactions([G.emojiReaction]);
+      toast(G.emojiReaction.emoji, {
+        className: 'toast-custom',
+        duration: 2000,
+      });
       setTimeout(() => {
-        setEmojiReactions([]);
         moves.clearEmojiReactions();
       }, 2000);
     }
   }, [G.emojiReaction]);
+
+  useEffect(() => {
+    const currentPlayers = gameMetadata
+      ? gameMetadata.filter((p) => p.name).map((p) => ({ ...p, id: String(p.id) }))
+      : [];
+
+    const previousPlayerIds = previousPlayers.map(p => p.id);
+    const currentPlayerIds = currentPlayers.map(p => p.id);
+
+    const joinedPlayers = currentPlayers.filter(p => !previousPlayerIds.includes(p.id));
+    const leftPlayers = previousPlayers.filter(p => !currentPlayerIds.includes(p.id));
+
+    if (!initialLoad) {
+      joinedPlayers.forEach(p => toast(`${p.name} has joined the game`, {
+        icon: <FaUser />,
+        duration: 2000,
+      }));
+      leftPlayers.forEach(p => toast(`${p.name} has left the game`, {
+        icon: <FaUser />,
+        duration: 2000,
+      }));
+    }
+
+    setPreviousPlayers(currentPlayers);
+    setInitialLoad(false);
+  }, [gameMetadata, initialLoad]);
+
 
   const attemptBuzz = () => {
     if (!buzzed) {
@@ -104,6 +134,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
       setLastBuzz(Date.now());
     }
   };
+
 
   // spacebar will buzz
   useEffect(() => {
@@ -183,11 +214,11 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   };
 
   const handleEmojiClick = (emoji) => {
-    if (!emojiCooldown) {
-      moves.addEmojiReaction(emoji);
-      setEmojiCooldown(true);
-      setTimeout(() => setEmojiCooldown(false), 2000); // 2 seconds cooldown
-    }
+    //if (!emojiCooldown) {
+    moves.addEmojiReaction(emoji);
+    setEmojiCooldown(true);
+    //setTimeout(() => setEmojiCooldown(false), 2000); // 2 seconds cooldown
+    //}
   };
 
   const toggleEmojiBubble = () => {
@@ -534,7 +565,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
                 key={idx}
                 className="emoji-button"
                 onClick={() => handleEmojiClick(emoji)}
-                disabled={emojiCooldown} // Disable button during cooldown
+              //disabled={emojiCooldown} // Disable button during cooldown
               >
                 {emoji}
               </button>
@@ -542,13 +573,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
           </div>
         )}
       </div>
-      <div className="emoji-reactions">
-        {emojiReactions.map((reaction, idx) => (
-          <span key={idx} className="emoji-reaction">
-            {reaction.emoji}
-          </span>
-        ))}
-      </div>
+
     </div>
   );
 }
