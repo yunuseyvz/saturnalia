@@ -3,13 +3,11 @@ import { Navbar } from 'react-bootstrap';
 import { isNil } from 'lodash';
 import { useHistory } from 'react-router';
 import { leaveRoom } from '../lib/endpoints';
-import { FaVolumeUp, FaVolumeMute, FaSignOutAlt } from 'react-icons/fa'; // Import icons
-import Toggle from 'react-toggle'
+import { FaVolumeUp, FaVolumeMute, FaSignOutAlt } from 'react-icons/fa'; 
 import '../App.css';
 
 function Logo({ size = 30, color = '#2eb2ff' }) {
-  const containerSize = size * 1.5; // Adjust the container size relative to the SVG size
-
+  const containerSize = size * 1.5; 
   return (
     <div
       style={{
@@ -19,9 +17,9 @@ function Logo({ size = 30, color = '#2eb2ff' }) {
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: '15%', // Rounded corners
-        background: 'linear-gradient(135deg, #f0f0f0, #f0f0f0)', // Gradient background
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)', // Modern shadow
-        overflow: 'hidden', // Ensure the SVG doesn't overflow the container
+        background: 'linear-gradient(135deg, #f0f0f0, #f0f0f0)',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)', 
+        overflow: 'hidden', 
         marginRight: '15px',
       }}
     >
@@ -31,9 +29,9 @@ function Logo({ size = 30, color = '#2eb2ff' }) {
         viewBox="0 0 12 12"
         xmlns="http://www.w3.org/2000/svg"
         style={{
-          display: 'block', // Ensure the SVG takes up the full width and height of its container
-          transform: 'translate(-60%, -75%)', // Center the SVG within the container
-          position: 'relative', // Required for the translate to work correctly
+          display: 'block', 
+          transform: 'translate(-60%, -75%)', 
+          position: 'relative',
           top: '50%',
           left: '50%',
         }}
@@ -64,7 +62,6 @@ export default function Header({
 }) {
   const history = useHistory();
 
-  // leave current game
   async function leave() {
     try {
       await leaveRoom(auth.roomID, auth.playerID, auth.credentials);

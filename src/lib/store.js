@@ -1,6 +1,6 @@
 import { ActivePlayers } from 'boardgame.io/core';
-import { questions } from './questions'; // Import questions
-import { questionsMultipleChoice } from './questionsMultipleChoice'; // Import multiple choice questions
+import { questions } from './questions'; 
+import { questionsMultipleChoice } from './questionsMultipleChoice'; 
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -121,9 +121,6 @@ export const Buzzer = {
   minPlayers: 2,
   maxPlayers: 200,
   setup: (ctx) => {
-    const shuffledQuestions = prepareQuestions();
-    const categories = Object.keys(questions);
-    //console.log("Shuffled Questions:", shuffledQuestions);
     return {
       queue: {},
       locked: false,
@@ -138,7 +135,13 @@ export const Buzzer = {
   phases: {
     lobby: {
       start: true,
-      moves: { setGameMode, changeCategory, startGame, addEmojiReaction, clearEmojiReactions },
+      moves: { 
+        setGameMode, 
+        changeCategory, 
+        startGame, 
+        addEmojiReaction, 
+        clearEmojiReactions 
+      },
       turn: {
         activePlayers: ActivePlayers.ALL,
       },
