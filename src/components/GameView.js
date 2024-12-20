@@ -101,15 +101,17 @@ const GameView = ({
         {!isConnected && <p className="warning">Disconnected - attempting to reconnect...</p>}
         {isHost && (
             <div className="settings" style={{ margin: '20px 0' }}>
-                <div className="button-container">
-                    <button className="text-button" onClick={() => moves.toggleLock()}>
-                        {G.locked ? <FaUnlock /> : <FaLock />} {G.locked ? 'Unlock buzzers' : 'Lock buzzers'}
-                    </button>
-                </div>
-                <div className="button-container">
-                    <button className="text-button" onClick={() => moves.resetBuzzers()}>
-                        <FaRedo /> Reset buzzers
-                    </button>
+                <div className="buzzer-controls">
+                    <div className="button-container">
+                        <button className="text-button" onClick={() => moves.toggleLock()}>
+                            {G.locked ? <FaUnlock /> : <FaLock />} {G.locked ? 'Unlock buzzers' : 'Lock buzzers'}
+                        </button>
+                    </div>
+                    <div className="button-container">
+                        <button className="text-button" onClick={() => moves.resetBuzzers()}>
+                            <FaRedo /> Reset buzzers
+                        </button>
+                    </div>
                 </div>
                 <div className="button-container">
                     <button onClick={() => moves.stopGame()}>

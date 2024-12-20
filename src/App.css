@@ -1191,3 +1191,14 @@ body {
 .custom-emoji-button:hover {
   background-color: #0056b3;
 }
+
+
+.buzzer-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}

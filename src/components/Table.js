@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
-import { FaUser } from 'react-icons/fa';
+import { FaArrowRight, FaSignOutAlt, FaUser, FaSignInAlt } from 'react-icons/fa';
 import { Container } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../App.css';
@@ -110,12 +110,14 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
 
     if (!initialLoad) {
       joinedPlayers.forEach(p => toast(`${p.name} has joined the game`, {
-        icon: <FaUser />,
+        icon: <FaSignInAlt />,
         duration: 2000,
+        position: 'bottom-left',
       }));
       leftPlayers.forEach(p => toast(`${p.name} has left the game`, {
-        icon: <FaUser />,
+        icon: <FaSignOutAlt />,
         duration: 2000,
+        position: 'bottom-left',
       }));
     }
 

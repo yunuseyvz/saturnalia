@@ -29,7 +29,7 @@ const LobbyView = ({
                         }}>
                         <FaIceCream className="game-mode-card-icon" />
                         <div className="game-mode-card-title">Buzzin</div>
-                        <div className="game-mode-card-description">Standard</div>
+                        <div className="game-mode-card-description">Just the Buzzer</div>
                     </div>
                     <div className="game-mode-card"
                         onClick={() => {
@@ -38,7 +38,7 @@ const LobbyView = ({
                         }}>
                         <FaHippo className="game-mode-card-icon" />
                         <div className="game-mode-card-title">Group</div>
-                        <div className="game-mode-card-description">Questions</div>
+                        <div className="game-mode-card-description">Standard Questions</div>
                     </div>
                     <div className="game-mode-card"
                         onClick={() => {
