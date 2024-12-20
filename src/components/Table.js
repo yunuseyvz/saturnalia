@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { some, isEmpty, sortBy, values, orderBy, get, round } from 'lodash';
 import { Howl } from 'howler';
-import { AiOutlineDisconnect, AiOutlineArrowRight, AiOutlineQrcode, AiOutlineArrowLeft } from 'react-icons/ai';
-import { FaCrown, FaUser, FaGamepad, FaList, FaHippo, FaRandom, FaPlay, FaCog, FaLock, FaUnlock, FaRedo, FaStop, FaBolt, FaIceCream } from 'react-icons/fa';
-import { Container, Modal, Button, Carousel, Spinner } from 'react-bootstrap';
+import { FaUser } from 'react-icons/fa';
+import { Container } from 'react-bootstrap';
 import Header from '../components/Header';
 import '../App.css';
-import QRCode from "react-qr-code";
 import toast, { Toaster } from 'react-hot-toast';
 import RoomInfo from '../components/RoomInfo';
 import LobbyView from '../components/LobbyView';
@@ -41,8 +39,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     volume: 0.5,
     rate: 1.0,
   });
-
-  const emojis = ['😂', '😍', '😎', '😡', '👍', '🤨', '😦'];
 
   const playSound = () => {
     if (sound && !soundPlayed) {
@@ -109,7 +105,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
 
     const previousPlayerIds = previousPlayers.map(p => p.id);
     const currentPlayerIds = currentPlayers.map(p => p.id);
-
     const joinedPlayers = currentPlayers.filter(p => !previousPlayerIds.includes(p.id));
     const leftPlayers = previousPlayers.filter(p => !currentPlayerIds.includes(p.id));
 
@@ -191,14 +186,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
     return `+${delta} ms`;
   };
 
-  const nextQuestion = () => {
-    if (currentQuestionIndex < totalQuestions - 1) {
-      const nextIndex = currentQuestionIndex + 1;
-      moves.nextQuestion();
-      moves.resetBuzzers();
-    }
-  };
-
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
     const filteredQuestions = G.questions.filter(q => q.category === newCategory);
@@ -278,7 +265,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             category={category}
             questionBoxRef={questionBoxRef}
             moves={moves}
-            nextQuestion={nextQuestion}
             isConnected={isConnected}
             buzzedPlayers={buzzedPlayers}
             activePlayers={activePlayers}
@@ -293,7 +279,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
         gameID={gameID}
         isEmojiBubbleOpen={isEmojiBubbleOpen}
         toggleEmojiBubble={toggleEmojiBubble}
-        emojis={emojis}
         moves={moves}
       />
     </div>

@@ -2,13 +2,14 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import QRCode from "react-qr-code";
 
+const emojis = ['😂', '😍', '😎', '😡', '👍', '🤨', '😦'];
+
 const Overlays = ({
     showQRCode,
     toggleQRCode,
     gameID,
     isEmojiBubbleOpen,
     toggleEmojiBubble,
-    emojis,
     moves
 }) => (
     <>

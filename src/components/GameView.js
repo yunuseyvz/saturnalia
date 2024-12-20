@@ -14,7 +14,6 @@ const GameView = ({
     category,
     questionBoxRef,
     moves,
-    nextQuestion,
     isConnected,
     buzzedPlayers,
     activePlayers,
@@ -88,7 +87,7 @@ const GameView = ({
                         </button>
                         <button
                             className="next-question-button"
-                            onClick={nextQuestion}
+                            onClick={() => moves.nextQuestion()}
                             disabled={currentQuestionIndex >= totalQuestions - 1}
                         >
                             <AiOutlineArrowRight size={24} />
