@@ -785,7 +785,8 @@ body {
 .emoji-selection {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  justify-content: center; /* Align emojis to the center */
+  gap: 10px; /* Reduce the gap to avoid extra space */
   position: absolute;
   bottom: 60px;
   right: 0;
@@ -795,7 +796,6 @@ body {
   padding: 10px;
   z-index: 1000;
   opacity: 0;
-  transform: scale(0.9);
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
@@ -1095,7 +1095,7 @@ body {
 
 .toast-custom {
   background: rgba(0, 0, 0, 0.5); /* Transparent background */
-  color: rgba(0, 0, 0, 0.5);
+  color: rgb(255, 255, 255);
   font-size: 2rem; /* Larger font size for the emoji */
   text-align: center;
   border-radius: 10px;
@@ -1122,4 +1122,72 @@ body {
 .next-question-button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+.emoji-menu-container {
+  position: relative;
+  margin-right: 10px;
+}
+
+.header-emoji-selection {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;
+  min-width: 200px;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-button {
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-emoji-form {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.custom-emoji-input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px 4px 4px 4px;
+  outline: none;
+}
+
+.emoji-selection .custom-emoji-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px 4px 4px 4px;
+  background-color: var(--brightBlueColor);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  outline: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.custom-emoji-button:hover {
+  background-color: #0056b3;
 }

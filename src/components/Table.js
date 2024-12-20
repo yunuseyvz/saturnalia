@@ -48,7 +48,6 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
   };
 
   useEffect(() => {
-    console.log(G.queue, Date.now());
     if (!G.queue[playerID]) {
       if (lastBuzz && Date.now() - lastBuzz < 500) {
         setTimeout(() => {
@@ -92,6 +91,7 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
         style: {
           background: 'rgba(0, 0, 0, 0.0)',
           boxShadow: 'none',
+          color: 'white',
         },
       });
       moves.clearEmojiReactions();
