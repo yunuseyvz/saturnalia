@@ -25,9 +25,6 @@ Built using Create React App and boardgame.io
 - **Upload Custom Questions**: Allow users to upload their own set of questions.
 - **Different Buzzers for each Player**
 - **Fortune Wheel**
-- **Pre-Game Lobby**
-- **2 Modes: Group Mode (like now basically) and FFA (rissa) with multiple choice**
-- **Host should see the answer of the question**
 
 ### Saturnalia?
 
