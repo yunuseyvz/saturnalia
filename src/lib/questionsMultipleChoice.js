@@ -7,7 +7,7 @@ export const questionsMultipleChoice = {
         },
         {
             question: "What is the name of the first electronic general-purpose computer?",
-            options: ["ENIAC", "UNIVAC", "IBM 701", "Apple I"],
+            options: ["ENIAC", "UNIVAC", "IBM 701", "Apple I", "Colossus"],
             answer: "ENIAC"
         }
     ],

@@ -529,7 +529,6 @@ body {
 .custom-modal .modal-content {
   background-color: #f8f9fa;
   border-radius: 8px;
-  padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -544,14 +543,8 @@ body {
   color: #343a40;
 }
 
-.custom-modal .modal-body {
-  padding: 20px;
-  text-align: center;
-}
-
 .custom-modal .modal-footer {
   border-top: 1px solid #dee2e6;
-  padding-top: 10px;
   display: flex;
   justify-content: center;
 }
@@ -1201,4 +1194,45 @@ body {
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.how-to-play-container {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.how-to-play-container .btn-info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal-body h5 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-body hr {
+  margin: 20px 0;
+}
+
+.how-to-play-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.how-to-play-container .btn-info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.touts .btn-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }

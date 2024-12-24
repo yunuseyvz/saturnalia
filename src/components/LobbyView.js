@@ -1,10 +1,11 @@
-import React from 'react';
-import { Spinner } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Spinner, Button } from 'react-bootstrap';
 import {
     FaIceCream, FaHippo, FaBolt, FaRandom,
-    FaPlay, FaCrown
+    FaPlay, FaCrown, FaInfoCircle
 } from 'react-icons/fa';
 import { AiOutlineDisconnect } from 'react-icons/ai';
+import TutorialModal from './TutorialModal';
 
 const LobbyView = ({
     isHost,
@@ -17,6 +18,11 @@ const LobbyView = ({
     firstPlayer,
     setSelectedGameMode
 }) => {
+    const [showTutorial, setShowTutorial] = useState(false);
+
+    const handleShowTutorial = () => setShowTutorial(true);
+    const handleCloseTutorial = () => setShowTutorial(false);
+
     return (
         <div className="lobby-container">
             {/* Game Mode Selection */}
@@ -87,6 +93,16 @@ const LobbyView = ({
                     </div>
                 )
             )}
+
+            {/* How to Play Button */}
+            <div className="how-to-play-container">
+                <Button variant="info" onClick={handleShowTutorial}>
+                    <FaInfoCircle /> Regole
+                </Button>
+            </div>
+
+            {/* How to Play Modal */}
+            <TutorialModal show={showTutorial} handleClose={handleCloseTutorial} />
 
             {/* Players List */}
             <div className="queue">

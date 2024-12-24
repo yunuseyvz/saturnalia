@@ -18,7 +18,7 @@ const Overlays = ({
     return (
         <>
             <Modal show={showQRCode} onHide={toggleQRCode} centered className="custom-modal">
-                <Modal.Header closeButton className="justify-content-center">
+                <Modal.Header className="justify-content-center">
                     <Modal.Title className="w-100 text-center">
                         Room Code: {gameID}
                     </Modal.Title>
