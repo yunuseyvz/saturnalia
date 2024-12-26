@@ -5,8 +5,7 @@ import logging
 
 def ping_endpoints():
     endpoints = [
-        "https://your-frontend-url.com",  # Replace with your actual URLs
-        "https://your-backend-url.com"
+        "https://saturnalia.onrender.com"
     ]
     
     for url in endpoints:
