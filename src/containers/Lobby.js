@@ -203,23 +203,15 @@ export default function Lobby({ setAuth }) {
     <div className="touts">
       <div>
         <h4>Simple multiplayer buzzer and quiz system</h4>
-        <p>Host a room and invite up to 200 people to join</p>
-      </div>
-      <div>
-        <h4>Join on any device</h4>
-        <p>Use your computer, smartphone, or tablet to join</p>
+        <p>Host a room and invite up to 200 people to join on any device</p>
       </div>
       <div>
         <h4>Free to use</h4>
         <p>Perfect for online quiz bowl, trivia night, or a classroom activity</p>
       </div>
       <div>
-        <h4>Customizable game modes and questions</h4>
+        <h4>Customizable game modes, questions, and more</h4>
         <p>Choose from multiple game modes and questions to suit your quiz style</p>
-      </div>
-      <div>
-        <h4>Host control</h4>
-        <p>The host has full control over the lobby, game modes, and questions</p>
       </div>
     </div>
   );

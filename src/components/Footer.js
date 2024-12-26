@@ -12,6 +12,14 @@ export function FooterSimple() {
       >
         open source
       </a>
+      {' '}| Made by{' '}
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://yuemya.de"
+      >
+        me
+      </a>
     </div>
   );
 }
@@ -32,6 +40,14 @@ export default function Footer({ mobileOnly = false }) {
             href="https://github.com/yunuseyvz/saturnalia"
           >
             open source
+          </a>
+          {' '}| Made by{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://yuemya.de"
+          >
+            me
           </a>
         </div>
       </Container>
