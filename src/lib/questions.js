@@ -1,5 +1,5 @@
 export const questions = {
-    WorldEvents: [
+    World: [
         {
             id: 1,
             question: "In che mese è capitata una delle più grandi eclissi registrate in Nord America?",

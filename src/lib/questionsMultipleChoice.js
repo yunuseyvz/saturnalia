@@ -1,5 +1,5 @@
 export const questionsMultipleChoice = {
-    WorldEvents: [
+    World: [
         {
             id: 101,
             question: "Magnitudo del terremoto del primo Gennaio in Giappone?",
