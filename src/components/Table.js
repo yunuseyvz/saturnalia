@@ -272,7 +272,8 @@ export default function Table({ G, ctx, moves, playerID, gameMetadata, headerDat
             activePlayers={activePlayers}
             firstPlayer={firstPlayer}
             queue={queue}
-            timeDisplay={timeDisplay} />
+            timeDisplay={timeDisplay}
+            selectRandomCategory />
         )}
       </Container>
       <Overlays

@@ -29,6 +29,7 @@
     "lodash": "^4.17.21",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
+    "react-dice-roll": "^1.2.2",
     "react-dom": "^16.13.1",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^3.9.0",

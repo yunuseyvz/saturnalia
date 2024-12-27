@@ -1,7 +1,8 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-import { AiOutlineDisconnect, AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
-import { FaUnlock, FaLock, FaRedo, FaStop, FaCrown } from 'react-icons/fa';
+import { AiOutlineDisconnect, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineCheck } from 'react-icons/ai';
+import { FaUnlock, FaLock, FaRedo, FaStop, FaCrown, FaRandom } from 'react-icons/fa';
+import '../App.css';
 
 const GameView = ({
     G,
@@ -19,7 +20,8 @@ const GameView = ({
     activePlayers,
     firstPlayer,
     queue,
-    timeDisplay
+    timeDisplay,
+    selectRandomCategory
 }) => (
     <>
         {/* Buzzer or Question Display */}
@@ -40,6 +42,11 @@ const GameView = ({
                         <Carousel.Item key={index}>
                             <div className="question-box" ref={questionBoxRef}>
                                 <p className="question">{q.question}</p>
+                                {G.displayedQuestions.includes(q.id) && (
+                                    <div className="checkmark-container">
+                                        <AiOutlineCheck className="checkmark" />
+                                    </div>
+                                )}
                             </div>
                             {!q.options && isHost && (
                                 <div className="answer-box">
@@ -112,12 +119,24 @@ const GameView = ({
                             <FaRedo /> Reset buzzers
                         </button>
                     </div>
+
                 </div>
+                {/* Category Hotswap
+                <div className="button-container">
+                    <button onClick={() => {
+                        moves.markAsSeen(G.questions.id);
+                        moves.changeCategory(G.categories[Math.floor(Math.random() * G.categories.length)]);
+                    }}>
+                        <FaRandom /> Next Category
+                    </button>
+                </div>
+                */}
                 <div className="button-container">
                     <button onClick={() => moves.stopGame()}>
                         <FaStop /> Stop Game
                     </button>
                 </div>
+
                 <div className="divider" />
             </div>
         )}
@@ -159,4 +178,4 @@ const GameView = ({
     </>
 );
 
-export default GameView;    
+export default GameView;

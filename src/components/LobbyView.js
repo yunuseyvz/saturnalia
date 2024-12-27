@@ -6,6 +6,7 @@ import {
 } from 'react-icons/fa';
 import { AiOutlineDisconnect } from 'react-icons/ai';
 import TutorialModal from './TutorialModal';
+import Dice from './DiceRoll';
 
 const LobbyView = ({
     isHost,
@@ -93,6 +94,21 @@ const LobbyView = ({
                     </div>
                 )
             )}
+
+            {/* Dice Roll */}
+            <div className="dice-roll-container">
+                <h2 className="dice-roll-title">Dice Roll</h2>
+                <div className="dice-results">
+                    <div className="dice-container">
+                    
+                        <Dice faces={6} className="dice1" />
+                    </div>
+                    <div className="dice-container">
+                       
+                        <Dice faces={3} className="dice2" />
+                    </div>
+                </div>
+            </div>
 
             {/* How to Play Button */}
             <div className="how-to-play-container">

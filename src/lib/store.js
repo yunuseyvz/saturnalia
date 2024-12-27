@@ -1,6 +1,6 @@
 import { ActivePlayers } from 'boardgame.io/core';
-import { questions } from './questions'; 
-import { questionsMultipleChoice } from './questionsMultipleChoice'; 
+import { questions } from './questions';
+import { questionsMultipleChoice } from './questionsMultipleChoice';
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -13,7 +13,7 @@ function shuffleArray(array) {
 function prepareQuestions() {
   let allQuestions = [];
   Object.keys(questions).forEach(category => {
-    const categoryQuestions = questions[category].map(q => ({ category, question: q.question, answer: q.answer }));
+    const categoryQuestions = questions[category].map(q => ({ category, id: q.id, question: q.question, answer: q.answer }));
     allQuestions = allQuestions.concat(shuffleArray(categoryQuestions));
   });
   return allQuestions;
@@ -24,6 +24,7 @@ function prepareMultipleChoiceQuestions() {
   Object.keys(questionsMultipleChoice).forEach(category => {
     const categoryQuestions = questionsMultipleChoice[category].map(q => ({
       category,
+      id: q.id,
       question: q.question,
       options: q.options,
       answer: q.answer
@@ -69,6 +70,7 @@ function nextQuestion(G, ctx) {
     G.question = questions[G.currentQuestionIndex].question;
     G.category = questions[G.currentQuestionIndex].category;
     resetBuzzers(G);
+    G.displayedQuestions.push(questions[G.currentQuestionIndex - 1].id);
   }
 }
 
@@ -79,6 +81,7 @@ function previousQuestion(G, ctx) {
     G.question = questions[G.currentQuestionIndex].question;
     G.category = questions[G.currentQuestionIndex].category;
     resetBuzzers(G);
+    G.displayedQuestions.push(questions[G.currentQuestionIndex + 1].id);
   }
 }
 
@@ -99,6 +102,8 @@ function startGame(G, ctx) {
 
 function stopGame(G, ctx) {
   ctx.events.setPhase('lobby');
+  const questions = G.selectedCategory ? filterQuestionsByCategory(G.questions, G.selectedCategory) : G.questions;
+  G.displayedQuestions.push(questions[G.currentQuestionIndex].id);
 }
 
 function setGameMode(G, ctx, mode) {
@@ -116,6 +121,10 @@ function clearEmojiReactions(G) {
   G.emojiReaction = null;
 }
 
+function markAsSeen(G, id) {
+  G.displayedQuestions.push(id);
+}
+
 export const Buzzer = {
   name: 'buzzer',
   minPlayers: 2,
@@ -130,17 +139,18 @@ export const Buzzer = {
       categories: Object.keys(questions),
       gameMode: null,
       emojiReactions: [],
+      displayedQuestions: [],
     };
   },
   phases: {
     lobby: {
       start: true,
-      moves: { 
-        setGameMode, 
-        changeCategory, 
-        startGame, 
-        addEmojiReaction, 
-        clearEmojiReactions 
+      moves: {
+        setGameMode,
+        changeCategory,
+        startGame,
+        addEmojiReaction,
+        clearEmojiReactions
       },
       turn: {
         activePlayers: ActivePlayers.ALL,
@@ -152,6 +162,7 @@ export const Buzzer = {
         resetBuzzer,
         resetBuzzers,
         toggleLock,
+        markAsSeen,
         nextQuestion,
         previousQuestion,
         changeCategory,
