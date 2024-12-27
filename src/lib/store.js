@@ -10,26 +10,36 @@ function shuffleArray(array) {
   return array;
 }
 
-function prepareQuestions() {
+function prepareQuestions(G) {
   let allQuestions = [];
   Object.keys(questions).forEach(category => {
-    const categoryQuestions = questions[category].map(q => ({ category, id: q.id, question: q.question, answer: q.answer }));
-    allQuestions = allQuestions.concat(shuffleArray(categoryQuestions));
+    let categoryQuestions = questions[category]
+      .map(q => ({ category, id: q.id, question: q.question, answer: q.answer }));
+
+    const unviewedQuestions = categoryQuestions.filter(q => !(G.displayedQuestions || []).includes(q.id));
+    const viewedQuestions = categoryQuestions.filter(q => (G.displayedQuestions || []).includes(q.id));
+
+    allQuestions = allQuestions.concat(shuffleArray(unviewedQuestions).concat(viewedQuestions));
   });
   return allQuestions;
 }
 
-function prepareMultipleChoiceQuestions() {
+function prepareMultipleChoiceQuestions(G) {
   let allQuestions = [];
   Object.keys(questionsMultipleChoice).forEach(category => {
-    const categoryQuestions = questionsMultipleChoice[category].map(q => ({
-      category,
-      id: q.id,
-      question: q.question,
-      options: q.options,
-      answer: q.answer
-    }));
-    allQuestions = allQuestions.concat(shuffleArray(categoryQuestions));
+    let categoryQuestions = questionsMultipleChoice[category]
+      .map(q => ({
+        category,
+        id: q.id,
+        question: q.question,
+        options: q.options,
+        answer: q.answer
+      }));
+
+    const unviewedQuestions = categoryQuestions.filter(q => !(G.displayedQuestions || []).includes(q.id));
+    const viewedQuestions = categoryQuestions.filter(q => (G.displayedQuestions || []).includes(q.id));
+
+    allQuestions = allQuestions.concat(shuffleArray(unviewedQuestions).concat(viewedQuestions));
   });
   return allQuestions;
 }
@@ -88,7 +98,7 @@ function previousQuestion(G, ctx) {
 function changeCategory(G, ctx, category) {
   G.selectedCategory = category;
   G.currentQuestionIndex = 0;
-  G.questions = G.gameMode === 'standard' ? prepareQuestions() : prepareMultipleChoiceQuestions();
+  G.questions = G.gameMode === 'standard' ? prepareQuestions(G) : prepareMultipleChoiceQuestions(G);
   const filteredQuestions = filterQuestionsByCategory(G.questions, category);
   G.question = filteredQuestions[0].question;
   G.category = filteredQuestions[0].category;
@@ -103,12 +113,16 @@ function startGame(G, ctx) {
 function stopGame(G, ctx) {
   ctx.events.setPhase('lobby');
   const questions = G.selectedCategory ? filterQuestionsByCategory(G.questions, G.selectedCategory) : G.questions;
-  G.displayedQuestions.push(questions[G.currentQuestionIndex].id);
+  if (G.gameMode != "buzzin") {
+    G.displayedQuestions.push(questions[G.currentQuestionIndex].id);
+    G.questions = G.questions.filter(q => !G.displayedQuestions.includes(q.id));
+    //console.log(G.questions);
+  }
 }
 
 function setGameMode(G, ctx, mode) {
   G.gameMode = mode;
-  G.questions = mode === 'standard' ? prepareQuestions() : prepareMultipleChoiceQuestions();
+  G.questions = mode === 'standard' ? prepareQuestions(G) : prepareMultipleChoiceQuestions(G);
   G.categories = [...new Set(G.questions.map(q => q.category))];
   G.category = null;
 }
@@ -130,6 +144,7 @@ export const Buzzer = {
   minPlayers: 2,
   maxPlayers: 200,
   setup: (ctx) => {
+    //console.log(questions)
     return {
       queue: {},
       locked: false,
@@ -139,7 +154,7 @@ export const Buzzer = {
       categories: Object.keys(questions),
       gameMode: null,
       emojiReactions: [],
-      displayedQuestions: [],
+      displayedQuestions: [], // Ensure this is initialized as an array
     };
   },
   phases: {

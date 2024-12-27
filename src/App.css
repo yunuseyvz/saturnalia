@@ -1320,3 +1320,9 @@ body {
       opacity: 1;
   }
 }
+
+.dice-result {
+  margin-left: 10px;
+  font-weight: bold;
+  color: #333;
+}
