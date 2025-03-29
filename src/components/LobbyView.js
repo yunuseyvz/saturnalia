@@ -113,7 +113,7 @@ const LobbyView = ({
             {/* How to Play Button */}
             <div className="how-to-play-container">
                 <Button variant="info" onClick={handleShowTutorial}>
-                    <FaInfoCircle /> Regole
+                    <FaInfoCircle /> Rules
                 </Button>
             </div>
 

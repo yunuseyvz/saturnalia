@@ -2,469 +2,217 @@ export const questions = {
     World: [
         {
             id: 1,
-            question: "In che mese è capitata una delle più grandi eclissi registrate in Nord America?",
-            answer: "8 Aprile"
+            question: "In which month did one of the largest eclipses recorded in North America occur?",
+            answer: "April 8"
         },
         {
             id: 2,
-            question: "Primo paese ortodosso a legalizzare il matrimonio tra coppie omosessuali?",
-            answer: "Grecia"
+            question: "Which was the first Orthodox country to legalize same-sex marriage?",
+            answer: "Greece"
         },
         {
             id: 3,
-            question: "In che mese una nave cargo si è schiantata contro il famoso ponte 'Scott Key Bridge' a Baltimora?",
-            answer: "Marzo"
+            question: "In which month did a cargo ship crash into the famous 'Scott Key Bridge' in Baltimore?",
+            answer: "March"
         },
         {
             id: 4,
-            question: "Morti totali nell'alluvione emiliana?",
-            answer: "Una"
+            question: "What event caused the largest blackout in North America in 2024?",
+            answer: "Solar eclipse"
         },
         {
             id: 5,
-            question: "In quale anno del calendario cinese siamo?",
+            question: "Which year of the Chinese calendar are we in?",
             answer: "Dragon"
-        },
-        {
-            id: 6,
-            question: "Quale evento ha causato il più grande blackout in Nord America nel 2024?",
-            answer: "L'eclissi solare"
-        },
-        {
-            id: 7,
-            question: "Quale importante accordo climatico è stato firmato alla COP28?",
-            answer: "Global Renewables and Energy Efficiency Pledge"
-        },
-        {
-            id: 8,
-            question: "Quale paese ha ospitato i Giochi Olimpici Invernali 2024?",
-            answer: "Gangwon, Corea del Sud"
-        },
-        {
-            id: 9,
-            question: "Quale importante summit si è tenuto a New Delhi nel 2024?",
-            answer: "G20"
-        },
-        {
-            id: 10,
-            question: "Quale importante trattato spaziale è stato firmato nel 2024?",
-            answer: "Artemis Accords"
         }
     ],
-    Scienza: [
+    Science: [
         {
-            id: 11,
-            question: "Qual è l'unità di misura della pressione?",
+            id: 6,
+            question: "What is the unit of measurement for pressure?",
             answer: "Pascal"
         },
         {
-            id: 12,
-            question: "Cosa si misura in un barometro?",
-            answer: "Pressione atmosferica"
+            id: 7,
+            question: "What does a barometer measure?",
+            answer: "Atmospheric pressure"
         },
         {
-            id: 13,
-            question: "Formula del volume di una sfera?",
+            id: 8,
+            question: "What is the formula for the volume of a sphere?",
             answer: "4/3 π r³"
         },
         {
-            id: 14,
-            question: "Qual è il sesto pianeta del sistema solare?",
-            answer: "Saturno"
-        },
-        {
-            id: 15,
-            question: "A quale fisico appartiene il famoso gatto?",
+            id: 9,
+            question: "Which physicist is associated with the famous cat thought experiment?",
             answer: "Erwin Schrödinger"
         },
         {
-            id: 16,
-            question: "Quale reazione nucleare ha provocato l'esplosione a Nagasaki?",
-            answer: "Fissione"
-        },
-        {
-            id: 17,
-            question: "Unità di misura della resistenza elettrica?",
+            id: 10,
+            question: "What is the unit of measurement for electrical resistance?",
             answer: "Ohm"
-        },
-        {
-            id: 18,
-            question: "Cosa causa il campo magnetico terrestre?",
-            answer: "Nucleo di Ferro"
-        },
-        {
-            id: 19,
-            question: "Come si chiama il processo di divisione del nucleo atomico?",
-            answer: "Fissione nucleare"
-        },
-        {
-            id: 20,
-            question: "Qual è l'unità di misura dell'intensità luminosa?",
-            answer: "Candela"
         }
     ],
-    Musica: [
+    Music: [
         {
-            id: 21,
-            question: "In quale paese nacque il Reggae?",
-            answer: "Giamaica"
+            id: 11,
+            question: "In which country was Reggae born?",
+            answer: "Jamaica"
         },
         {
-            id: 22,
-            question: "Chi cantava 'Nel Blu dipinto di Blu'?",
-            answer: "Cotugno"
-        },
-        {
-            id: 23,
-            question: "In quale lingua è stato scritto il flauto magico?",
-            answer: "Tedesco"
-        },
-        {
-            id: 24,
-            question: "Quale band rock canta 'Satisfaction'?",
+            id: 12,
+            question: "Which rock band performs 'Satisfaction'?",
             answer: "Rolling Stones"
         },
         {
-            id: 25,
-            question: "Robert Plant è il frontman di quale band?",
-            answer: "Led Zeppelin"
+            id: 13,
+            question: "Who was the frontman of Led Zeppelin?",
+            answer: "Robert Plant"
         },
         {
-            id: 26,
-            question: "Che strumento suonava Squiddy?",
-            answer: "Clarinetto"
-        },
-        {
-            id: 27,
-            question: "Chi ha composto le Quattro Stagioni?",
+            id: 14,
+            question: "Who composed 'The Four Seasons'?",
             answer: "Antonio Vivaldi"
         },
         {
-            id: 28,
-            question: "Quale strumento suonava Miles Davis?",
-            answer: "Tromba"
-        },
-        {
-            id: 29,
-            question: "Chi è considerato il re del rock and roll?",
-            answer: "Elvis Presley"
-        },
-        {
-            id: 30,
-            question: "Quale band ha pubblicato 'Dark Side of the Moon'?",
+            id: 15,
+            question: "Which band released 'Dark Side of the Moon'?",
             answer: "Pink Floyd"
         }
     ],
-    Sport: [
+    Sports: [
         {
-            id: 31,
-            question: "Quanti Italiani hanno vinto il Pallone d'Oro?",
-            answer: "4"
-        },
-        {
-            id: 32,
-            question: "Chi ha vinto Wimbledon?",
+            id: 16,
+            question: "Who won Wimbledon in 2023?",
             answer: "Alcaraz"
         },
         {
-            id: 33,
-            question: "Secondo posto coppa Davis?",
-            answer: "Olanda"
+            id: 17,
+            question: "Which team has won the most World Cups in soccer?",
+            answer: "Brazil"
         },
         {
-            id: 34,
-            question: "Quale squadra ha vinto più mondiali di calcio?",
-            answer: "Brasile"
-        },
-        {
-            id: 35,
-            question: "Quanti kilometri sono una maratona?",
+            id: 18,
+            question: "How many kilometers is a marathon?",
             answer: "42"
         },
         {
-            id: 36,
-            question: "Quali sono i 3 grandi giri del ciclismo?",
-            answer: "Tour de France, Giro d'Italia, Giro di Spagna"
-        },
-        {
-            id: 37,
-            question: "Vero nome di Muhammad Ali?",
+            id: 19,
+            question: "What was Muhammad Ali's birth name?",
             answer: "Cassius Clay"
         },
         {
-            id: 38,
-            question: "Quale pezzo degli scacchi può saltare altre pedine?",
-            answer: "Cavallo"
-        },
-        {
-            id: 39,
-            question: "Quali sono i colori olimpici?",
-            answer: "Blu, Rosso, Giallo, Verde, Nero"
-        },
-        {
-            id: 40,
-            question: "Chi detiene il record di goal in Serie A?",
-            answer: "Silvio Piola"
+            id: 20,
+            question: "Which chess piece can jump over other pieces?",
+            answer: "Knight"
         }
     ],
-    Geografia: [
+    Geography: [
         {
-            id: 41,
-            question: "Quale città è situata tra due continenti?",
+            id: 21,
+            question: "Which city is located between two continents?",
             answer: "Istanbul"
         },
         {
-            id: 42,
-            question: "Qual è la capitale della Somalia?",
-            answer: "Mogadiscio"
+            id: 22,
+            question: "What is the capital of Somalia?",
+            answer: "Mogadishu"
         },
         {
-            id: 43,
-            question: "Qual è il fiume più lungo del mondo?",
-            answer: "Nilo"
+            id: 23,
+            question: "What is the longest river in the world?",
+            answer: "Nile"
         },
         {
-            id: 44,
-            question: "Con chi confina a sud la Slovacchia?",
-            answer: "Ungheria"
+            id: 24,
+            question: "Which country has the most UNESCO World Heritage sites?",
+            answer: "Italy"
         },
         {
-            id: 45,
-            question: "Elenca tutti e 7 i continenti",
-            answer: "America del nord e sud, Europa, Asia, Africa, Oceania, Antartica"
-        },
-        {
-            id: 46,
-            question: "Dove si trova Beirut?",
-            answer: "Libano"
-        },
-        {
-            id: 47,
-            question: "Quale paese ha più siti dell'UNESCO?",
-            answer: "Italia"
-        },
-        {
-            id: 48,
-            question: "Fiume più lungo d'Europa?",
-            answer: "Volga"
-        },
-        {
-            id: 49,
-            question: "A quale paese appartiene la Groenlandia?",
-            answer: "Danimarca"
-        },
-        {
-            id: 50,
-            question: "Fiume più lungo al mondo?",
-            answer: "Rio delle Amazzoni"
+            id: 25,
+            question: "Which country owns Greenland?",
+            answer: "Denmark"
         }
     ],
-    Storia: [
+    History: [
         {
-            id: 51,
-            question: "Chi fu l'unico presidente americano a dimettersi?",
+            id: 26,
+            question: "Who was the only US president to resign?",
             answer: "Richard Nixon"
         },
         {
-            id: 52,
-            question: "Sotto il dominio di quale potenza si trovava il Vietnam?",
-            answer: "Francia"
+            id: 27,
+            question: "What was Fidel Castro's nationality?",
+            answer: "Cuban"
         },
         {
-            id: 53,
-            question: "In quale città si spostò il papato per 70 anni?",
-            answer: "Avignone"
+            id: 28,
+            question: "Which fascist regime lasted the longest?",
+            answer: "Franco's Spain"
         },
         {
-            id: 54,
-            question: "Qual era la nazionalità di Fidel Castro?",
-            answer: "Cubana"
-        },
-        {
-            id: 55,
-            question: "Quale regime fascista resistette più a lungo?",
-            answer: "Spagna Franchista"
-        },
-        {
-            id: 56,
-            question: "Filippo secondo di Macedonia era il padre di quale celeberrima figura storica?",
-            answer: "Alessandro Magno"
-        },
-        {
-            id: 57,
-            question: "Chi fu il primo romano a convertirsi al Cristianesimo in punto di morte?",
-            answer: "Costantino"
-        },
-        {
-            id: 58,
-            question: "Come si chiamò il primo uomo nello spazio?",
+            id: 29,
+            question: "Who was the first man in space?",
             answer: "Yuri Gagarin"
         },
         {
-            id: 59,
-            question: "Chi fu l'ultimo imperatore romano d'Occidente?",
-            answer: "Romolo Augusto"
-        },
-        {
-            id: 60,
-            question: "In che anno cadde l'impero bizantino?",
+            id: 30,
+            question: "In what year did the Byzantine Empire fall?",
             answer: "1453"
         }
     ],
-    Italia: [
+    Animals: [
         {
-            id: 61,
-            question: "Qual è la percentuale di calciatori italiani in Serie A?",
-            answer: "35%"
+            id: 31,
+            question: "Which animal has the largest brain?",
+            answer: "Sperm Whale"
         },
         {
-            id: 62,
-            question: "Dove nacque Garibaldi?",
-            answer: "Nizza"
+            id: 32,
+            question: "Which animal has the longest pregnancy period?",
+            answer: "African Elephant"
         },
         {
-            id: 63,
-            question: "Che articolo della costituzione dice: La sovranità appartiene al popolo?",
-            answer: "Il primo"
+            id: 33,
+            question: "Why are flamingos pink?",
+            answer: "Diet"
         },
         {
-            id: 64,
-            question: "Quando fu ucciso Matteotti?",
-            answer: "1924"
+            id: 34,
+            question: "Which is the fastest land animal?",
+            answer: "Cheetah"
         },
         {
-            id: 65,
-            question: "Quante furono le guerre di indipendenza?",
-            answer: "3"
-        },
-        {
-            id: 66,
-            question: "Come si chiamano gli ultimi 3 presidenti della Repubblica?",
-            answer: "Ciampi, Napolitano e Mattarella"
-        },
-        {
-            id: 67,
-            question: "In che regione si trova Salò?",
-            answer: "Lombardia"
-        },
-        {
-            id: 68,
-            question: "Quale coalizione risiede oggi al governo?",
-            answer: "FdI, FI e Lega"
-        },
-        {
-            id: 69,
-            question: "In che anno salì al potere Mussolini?",
-            answer: "1922"
-        },
-        {
-            id: 70,
-            question: "Chi ha vinto il primo campionato di Pallacanestro?",
-            answer: "Virtus Bologna"
+            id: 35,
+            question: "Which is the only mammal that can fly?",
+            answer: "Bat"
         }
     ],
-    Animali: [
+    Movies: [
         {
-            id: 71,
-            question: "Quale animale ha il cervello più grande?",
-            answer: "Capodoglio"
-        },
-        {
-            id: 72,
-            question: "Qual è l'unico marsupiale che si può trovare naturalmente fuori dall'Australia?",
-            answer: "Opossum"
-        },
-        {
-            id: 73,
-            question: "Quale animale ha il periodo di gravidanza più lungo?",
-            answer: "Elefante Africano"
-        },
-        {
-            id: 74,
-            question: "Quale mammifero ha la lingua blu?",
-            answer: "Giraffa"
-        },
-        {
-            id: 75,
-            question: "Perché i fenicotteri sono rosa?",
-            answer: "Dieta"
-        },
-        {
-            id: 76,
-            question: "Quale animale può vivere più a lungo?",
-            answer: "La tartaruga gigante"
-        },
-        {
-            id: 77,
-            question: "Quale è l'animale terrestre più veloce?",
-            answer: "Ghepardo"
-        },
-        {
-            id: 78,
-            question: "Quale uccello non può volare?",
-            answer: "Pinguino"
-        },
-        {
-            id: 79,
-            question: "Quale è l'unico mammifero che può volare?",
-            answer: "Pipistrello"
-        },
-        {
-            id: 80,
-            question: "Quale animale dorme in piedi?",
-            answer: "Cavallo"
-        }
-    ],
-    Film: [
-        {
-            id: 81,
-            question: "Qual è il film con più incassi della storia?",
+            id: 36,
+            question: "What is the highest-grossing film of all time?",
             answer: "Avatar"
         },
         {
-            id: 82,
-            question: "Quanti film ha realizzato Quentin Tarantino?",
+            id: 37,
+            question: "How many films has Quentin Tarantino directed?",
             answer: "9"
         },
         {
-            id: 83,
-            question: "Chi è il più giovane vincitore all'oscar come miglior attore protagonista?",
-            answer: "Adrien Brody"
-        },
-        {
-            id: 84,
-            question: "Primo film straniero a vincere l'oscar al miglior Film?",
+            id: 38,
+            question: "Which was the first foreign language film to win Best Picture at the Oscars?",
             answer: "Parasite"
         },
         {
-            id: 85,
-            question: "Chi ha diretto 'La vita è bella'?",
-            answer: "Roberto Benigni"
-        },
-        {
-            id: 86,
-            question: "Quale attore ha interpretato James Bond più volte?",
-            answer: "Roger Moore"
-        },
-        {
-            id: 87,
-            question: "Chi ha diretto 'Il Padrino'?",
+            id: 39,
+            question: "Who directed 'The Godfather'?",
             answer: "Francis Ford Coppola"
         },
         {
-            id: 88,
-            question: "Quale film ha vinto il primo Oscar come miglior film?",
-            answer: "Wings"
-        },
-        {
-            id: 89,
-            question: "Chi ha diretto 'Pulp Fiction'?",
-            answer: "Quentin Tarantino"
-        },
-        {
-            id: 90,
-            question: "Quale è il film più costoso mai realizzato?",
-            answer: "Avatar: La via dell'acqua"
+            id: 40,
+            question: "What is the most expensive film ever made?",
+            answer: "Avatar: The Way of Water"
         }
     ]
 };

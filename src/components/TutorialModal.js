@@ -6,16 +6,27 @@ const TutorialModal = ({ show, handleClose }) => {
     return (
         <Modal show={show} onHide={handleClose} centered className='custom-modal'>
             <Modal.Header>
-                <Modal.Title>REGOLE</Modal.Title>
+                <Modal.Title>Rules</Modal.Title>
             </Modal.Header>
             <Modal.Body className="text-left">
-                <p><strong>Due tipi di quiz, SINGOLO, DI GRUPPO.</strong></p>
-                <p><FaBolt /> <strong>Singolo</strong> - tutti contro tutti, domande a scelta multipla. Si avanza di 1 casella per domanda indovinata, 3 o 5 domande totali.</p>
-                <p><FaHippo /> <strong>Di Gruppo</strong> - primo e ultimo giocatore sfidano gli altri 3 (in caso di pareggi il team da 3 sceglie il compagno). Domande aperte, il team che vince la meglio di 3/5 avrà un dado aggiuntivo da 1 a 3.</p>
-                <p><strong>SWITCH</strong> - Nel caso il gioco sia troppo veloce il conducente potrà applicare lo SWITCH, che consiste nel cambiamento da vantaggi per aver vinto il quiz, in svantaggi per averlo perso:</p>
+                <p>
+                    <FaBolt /> <strong>Single</strong> – Everyone against everyone, multiple-choice questions. Players advance 1 space for each correct answer, with a total of 3 or 5 questions.
+                </p>
+                <p>
+                    <FaHippo /> <strong>Group</strong> – The first and last player challenge the other three (in case of a tie, the team of three selects a teammate). Open-ended questions, and the team that wins the best of 3/5 rounds gets an additional die roll (1 to 3).
+                </p>
+
+                <p><strong>SWITCH</strong></p>
+                <p>
+                    If the game progresses too quickly, the host can apply the SWITCH, which changes quiz rewards from advantages for winning to penalties for losing:
+                </p>
                 <ul>
-                    <li><FaBolt /> <strong>Singolo (SWITCH)</strong> - Chi indovina sceglie chi indietreggiare di 1 casella per domanda.</li>
-                    <li><FaHippo /> <strong>Di Gruppo (SWITCH)</strong> - Il team che perde tirerà il dado aggiuntivo che verrà sottratto al tiro principale.</li>
+                    <li>
+                        <FaBolt /> <strong>Single (SWITCH)</strong> – The player who answers correctly chooses someone to move back 1 space per question.
+                    </li>
+                    <li>
+                        <FaHippo /> <strong>Group (SWITCH)</strong> – The losing team rolls the additional die, and the result is subtracted from their main roll.
+                    </li>
                 </ul>
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
