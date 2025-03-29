@@ -23,6 +23,7 @@ Built using Create React App and boardgame.io
 ### Planned Features (maybe)
 
 - **Upload Custom Questions**: Allow users to upload their own set of questions.
+- **AI Generated questions on the fly**
 - **Different Buzzers for each Player**
 - **Fortune Wheel**
 
